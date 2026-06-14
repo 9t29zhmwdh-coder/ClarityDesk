@@ -1,0 +1,11 @@
+{
+  "app": "Browser",
+  "matchProcessNames": ["Safari", "Google Chrome", "Firefox", "Arc", "Brave Browser"],
+  "mode": "language",
+  "rules": {
+    "detectCode": false,
+    "explainErrors": false,
+    "preferredModel": null,
+    "language": null
+  }
+}

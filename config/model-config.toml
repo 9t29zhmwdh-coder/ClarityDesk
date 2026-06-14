@@ -1,0 +1,17 @@
+[ollama]
+host  = "http://localhost:11434"
+model = "llama3.2"
+
+# Recommended models per use-case:
+# Language translation:  "nllb-200-distilled-1.3B", "llama3.2", "mistral"
+# Code explanation:      "codellama:7b", "deepseek-coder:6.7b", "llama3.2"
+# General / Smart mode:  "llama3.2", "mistral", "phi3"
+
+[ocr]
+engine    = "tesseract"
+language  = "eng+deu"
+# Add languages: eng+deu+fra+spa+ita
+
+[defaults]
+mode            = "smart"
+target_language = "Deutsch"

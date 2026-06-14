@@ -1,0 +1,11 @@
+{
+  "app": "Visual Studio Code",
+  "matchProcessNames": ["Code", "code"],
+  "mode": "dev",
+  "rules": {
+    "detectCode": true,
+    "explainErrors": true,
+    "preferredModel": null,
+    "language": null
+  }
+}

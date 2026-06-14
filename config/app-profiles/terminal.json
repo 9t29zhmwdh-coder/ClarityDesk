@@ -1,0 +1,11 @@
+{
+  "app": "Terminal",
+  "matchProcessNames": ["Terminal", "iTerm2", "kitty", "alacritty", "wezterm"],
+  "mode": "dev",
+  "rules": {
+    "detectCode": false,
+    "explainErrors": true,
+    "preferredModel": null,
+    "language": null
+  }
+}
