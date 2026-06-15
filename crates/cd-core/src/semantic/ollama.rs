@@ -32,8 +32,8 @@ struct VersionResponse {
 }
 
 pub struct OllamaClient {
-    host: String,
-    model: String,
+    pub host: String,
+    pub model: String,
     http: Client,
 }
 
@@ -83,25 +83,20 @@ impl OllamaClient {
         let version_url = format!("{}/api/version", self.host);
         let tags_url = format!("{}/api/tags", self.host);
 
-        let version = self
-            .http
-            .get(&version_url)
-            .send()
-            .await
-            .ok()
-            .and_then(|r| r.json::<VersionResponse>().ok().map(|v| v.version))
-            .await;
+        let version = match self.http.get(&version_url).send().await {
+            Ok(resp) => resp.json::<VersionResponse>().await.ok().map(|v| v.version),
+            Err(_) => None,
+        };
 
-        let models = self
-            .http
-            .get(&tags_url)
-            .send()
-            .await
-            .ok()
-            .and_then(|r| r.json::<TagsResponse>().ok())
-            .map(|t| t.models.into_iter().map(|m| m.name).collect::<Vec<_>>())
-            .await
-            .unwrap_or_default();
+        let models = match self.http.get(&tags_url).send().await {
+            Ok(resp) => resp
+                .json::<TagsResponse>()
+                .await
+                .ok()
+                .map(|t| t.models.into_iter().map(|m| m.name).collect::<Vec<_>>())
+                .unwrap_or_default(),
+            Err(_) => Vec::new(),
+        };
 
         OllamaStatus {
             connected: version.is_some(),
