@@ -39,8 +39,8 @@ pub fn capture_screen(index: usize) -> Result<CaptureFrame> {
         .ok_or_else(|| CdError::Capture(format!("Screen index {index} not found")))?;
 
     let image = screen.capture().map_err(|e| CdError::Capture(e.to_string()))?;
-    let width = image.width() as u32;
-    let height = image.height() as u32;
+    let width = image.width();
+    let height = image.height();
     let png = rgba_to_png(image)?;
 
     Ok(CaptureFrame::new(png, width, height, CaptureSource::FullScreen { index }))
@@ -56,8 +56,8 @@ pub fn capture_region(x: i32, y: i32, width: u32, height: u32) -> Result<Capture
         .capture_area(x, y, width, height)
         .map_err(|e| CdError::Capture(e.to_string()))?;
 
-    let w = image.width() as u32;
-    let h = image.height() as u32;
+    let w = image.width();
+    let h = image.height();
     let png = rgba_to_png(image)?;
 
     Ok(CaptureFrame::new(png, w, h, CaptureSource::Region { x, y, width, height }))
