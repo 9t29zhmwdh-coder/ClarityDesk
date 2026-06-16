@@ -32,7 +32,7 @@ impl ContentAnalyzer {
     pub fn filter_blocks<'a>(&self, blocks: &'a [TextBlock]) -> Vec<&'a TextBlock> {
         blocks
             .iter()
-            .filter(|b| b.text.trim().split_whitespace().count() >= 3)
+            .filter(|b| b.text.split_whitespace().count() >= 3)
             .collect()
     }
 
