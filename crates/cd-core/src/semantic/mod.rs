@@ -52,7 +52,7 @@ impl SemanticEngine {
         let mut analyzed = Vec::new();
 
         for block in &blocks {
-            if block.text.trim().split_whitespace().count() < 3 {
+            if block.text.split_whitespace().count() < 3 {
                 continue;
             }
 
