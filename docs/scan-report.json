@@ -1,0 +1,28 @@
+{
+  "scan_date": "2026-06-16",
+  "account": "9t29zhmwdh-coder",
+  "total_repos": 20,
+  "skeleton_schema_version": "1.0",
+  "repos": [
+    {"name":"ClarityDesk","language":"Rust/Tauri","earliest_commit":"2026-06-14T18:55:28Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"complete","notes":"First repo processed — canonical template"},
+    {"name":"BugRadar","language":"Rust/Tauri","earliest_commit":"2026-06-12T10:20:38Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"LogLens","language":"Rust/Tauri","earliest_commit":"2026-06-12T11:24:55Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"MailPilot","language":"Rust/Tauri","earliest_commit":"2026-06-12T16:46:38Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md + SECURITY.md"},
+    {"name":"CleanFlow","language":"Rust/Tauri","earliest_commit":"2026-06-12T09:49:39Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"DeviceHealth","language":"Rust/Tauri","earliest_commit":"2026-06-12T17:15:32Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"StateForge","language":"Rust/Tauri","earliest_commit":"2026-06-12T13:48:23Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"LifeSort","language":"Rust/Tauri","earliest_commit":"2026-06-12T14:02:45Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"LifePlanner","language":"Rust/Tauri","earliest_commit":"2026-06-12T18:03:17Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"SiliconMark","language":"Python","earliest_commit":"2026-06-15T19:07:41Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":""},
+    {"name":"GardenFlow","language":"Python","earliest_commit":"2026-06-15T18:57:58Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"NetScanX","language":"Python","earliest_commit":"2026-06-13T00:36:33Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md + SECURITY.md"},
+    {"name":"HomePortal","language":"Python","earliest_commit":"2026-06-15T19:12:31Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":""},
+    {"name":"NetDashboard","language":"C#","earliest_commit":"2026-06-15T19:11:55Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md + SECURITY.md, default branch: master"},
+    {"name":"NetSweep","language":"C#","earliest_commit":"2026-06-15T19:10:15Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has .github/ dir"},
+    {"name":"CodeWhisper","language":"Swift","earliest_commit":"2026-06-15T19:15:36Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md + SECURITY.md"},
+    {"name":"SwiftAgent","language":"Swift","earliest_commit":"2026-06-15T19:15:20Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
+    {"name":"JellyFin-MediaStack","language":"Docker","earliest_commit":"2026-06-13T00:28:46Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":""},
+    {"name":"9t29zhmwdh-coder.github.io","language":"HTML","earliest_commit":"2026-06-13T00:33:33Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"GitHub Pages"},
+    {"name":"9t29zhmwdh-coder","language":"Profile","earliest_commit":"2026-06-13T00:44:24Z","license":"none","release_version":"none","skeleton_status":"pending","notes":"Profile README only — no release, SKELETON.md only"}
+  ]
+}
