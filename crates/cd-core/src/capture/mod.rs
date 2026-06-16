@@ -5,6 +5,14 @@ use crate::{
     models::capture::{CaptureFrame, CaptureSource, ScreenInfo},
 };
 
+fn rgba_to_png(img: screenshots::image::RgbaImage) -> Result<Vec<u8>> {
+    let mut png = Vec::new();
+    image::DynamicImage::ImageRgba8(img)
+        .write_to(&mut std::io::Cursor::new(&mut png), image::ImageFormat::Png)
+        .map_err(|e| CdError::Capture(e.to_string()))?;
+    Ok(png)
+}
+
 pub fn list_screens() -> Result<Vec<ScreenInfo>> {
     let screens = Screen::all().map_err(|e| CdError::Capture(e.to_string()))?;
     Ok(screens
@@ -30,9 +38,7 @@ pub fn capture_screen(index: usize) -> Result<CaptureFrame> {
     let image = screen.capture().map_err(|e| CdError::Capture(e.to_string()))?;
     let width = image.width() as u32;
     let height = image.height() as u32;
-    let png = image
-        .to_png(None)
-        .map_err(|e| CdError::Capture(e.to_string()))?;
+    let png = rgba_to_png(image)?;
 
     Ok(CaptureFrame::new(png, width, height, CaptureSource::FullScreen { index }))
 }
@@ -49,9 +55,7 @@ pub fn capture_region(x: i32, y: i32, width: u32, height: u32) -> Result<Capture
 
     let w = image.width() as u32;
     let h = image.height() as u32;
-    let png = image
-        .to_png(None)
-        .map_err(|e| CdError::Capture(e.to_string()))?;
+    let png = rgba_to_png(image)?;
 
     Ok(CaptureFrame::new(png, w, h, CaptureSource::Region { x, y, width, height }))
 }
