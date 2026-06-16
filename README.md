@@ -10,6 +10,7 @@
 
 ClarityDesk captures your screen, extracts text with OCR and analyzes it with a local AI model: translation, code explanation, log analysis and terminal diagnostics — all without cloud, without data storage, without account.
 
+[![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions)
 ![Rust](https://img.shields.io/badge/Rust-1.77+-orange?logo=rust)
 ![Tauri](https://img.shields.io/badge/Tauri-v2-blue?logo=tauri)
 ![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)
