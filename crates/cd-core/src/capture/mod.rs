@@ -1,4 +1,5 @@
 use screenshots::Screen;
+use screenshots::image::{ImageEncoder, codecs::png::PngEncoder, ColorType};
 
 use crate::{
     error::{CdError, Result},
@@ -6,9 +7,11 @@ use crate::{
 };
 
 fn rgba_to_png(img: screenshots::image::RgbaImage) -> Result<Vec<u8>> {
+    let (width, height) = img.dimensions();
+    let raw = img.into_raw();
     let mut png = Vec::new();
-    image::DynamicImage::ImageRgba8(img)
-        .write_to(&mut std::io::Cursor::new(&mut png), image::ImageFormat::Png)
+    PngEncoder::new(&mut png)
+        .write_image(&raw, width, height, ColorType::Rgba8)
         .map_err(|e| CdError::Capture(e.to_string()))?;
     Ok(png)
 }
