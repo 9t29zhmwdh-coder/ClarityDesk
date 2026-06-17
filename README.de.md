@@ -6,9 +6,9 @@
 
 [🇬🇧 English Version](README.md)
 
-**Universeller Display-Interpreter — OCR + lokale KI, vollständig offline. Rust + Tauri.**
+**Universeller Display-Interpreter mit OCR und lokaler KI. Vollständig offline, entwickelt mit Rust und Tauri.**
 
-ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ihn mit einem lokalen KI-Modell: Übersetzung, Code-Erklärung, Log-Analyse und Terminal-Diagnose — ohne Cloud, ohne Datenspeicherung, ohne Account.
+ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ihn mit einem lokalen KI-Modell: Übersetzung, Code-Erklärung, Log-Analyse und Terminal-Diagnose; ohne Cloud, ohne Datenspeicherung, ohne Account.
 
 ![Rust](https://img.shields.io/badge/Rust-1.77+-orange?logo=rust)
 ![Tauri](https://img.shields.io/badge/Tauri-v2-blue?logo=tauri)
@@ -29,7 +29,7 @@ ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ih
 | **Block-Klassifizierung** | Identifiziert Code, Terminal, Log, Absatz, Tabelle, UI-Blöcke |
 | **Lokale KI (Ollama)** | Läuft mit Llama, Mistral, CodeLlama oder jedem kompatiblen Modell |
 | **App-Profile** | Anwendungsspezifische Modus-Voreinstellungen (VS Code → Dev, Browser → Sprache) |
-| **Privacy-First** | Keine Cloud, keine Speicherung, keine Telemetrie — nur RAM-Verarbeitung |
+| **Privacy-First** | Keine Cloud, keine Speicherung, keine Telemetrie: nur RAM-Verarbeitung |
 | **Hotkeys** | Systemweite Kurzbefehle für Erfassung und Moduswechsel |
 | **Side-Panel** | Original- vs. Analyse-Ansicht mit Kopierfunktion |
 
