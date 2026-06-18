@@ -1,11 +1,11 @@
-# Privacy Policy — ClarityDesk
+# Privacy Policy : ClarityDesk
 
 ## Summary
 
 ClarityDesk processes all data locally and discards it immediately after display.
 No data ever leaves your device.
 
-## What We Collect
+## What I Collect
 
 **Nothing.** ClarityDesk does not collect, store, transmit, or share any user data.
 
