@@ -6,7 +6,7 @@
 
 [🇬🇧 English Version](README.md)
 
-**Universeller Display-Interpreter mit OCR und lokaler KI. Vollständig offline, entwickelt mit Rust und Tauri.**
+**Universeller Display-Interpreter mit OCR und lokaler KI. Bewusst offline, damit Bildschirminhalte das Gerät nie verlassen. Entwickelt mit Rust und Tauri.**
 
 ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ihn mit einem lokalen KI-Modell: Übersetzung, Code-Erklärung, Log-Analyse und Terminal-Diagnose; ohne Cloud, ohne Datenspeicherung, ohne Account.
 
