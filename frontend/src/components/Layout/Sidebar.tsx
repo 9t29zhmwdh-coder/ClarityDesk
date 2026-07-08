@@ -1,15 +1,18 @@
 import { LayoutDashboard, FileSearch, Settings, Eye } from "lucide-react";
 import clsx from "clsx";
 import { useClarityStore } from "../../stores/clarityStore";
-
-const tabs = [
-  { id: "dashboard" as const, label: "Dashboard", Icon: LayoutDashboard },
-  { id: "analysis"  as const, label: "Analysis",  Icon: FileSearch },
-  { id: "settings"  as const, label: "Settings",  Icon: Settings },
-] as const;
+import { useT, useLangStore } from "../../lib/i18n";
 
 export function Sidebar() {
   const { activeTab, setTab } = useClarityStore();
+  const t = useT();
+  const { lang, toggle } = useLangStore();
+
+  const tabs = [
+    { id: "dashboard" as const, label: t("navDashboard"), Icon: LayoutDashboard },
+    { id: "analysis"  as const, label: t("navAnalysis"),  Icon: FileSearch },
+    { id: "settings"  as const, label: t("navSettings"),  Icon: Settings },
+  ] as const;
 
   return (
     <aside className="w-16 flex flex-col items-center gap-1 py-4 bg-surface-1 border-r border-surface-3 shrink-0">
@@ -36,6 +39,14 @@ export function Sidebar() {
           </button>
         ))}
       </div>
+
+      <button
+        onClick={toggle}
+        title={lang === "en" ? "Deutsch" : "English"}
+        className="text-[10px] font-medium text-muted hover:text-slate-300 py-2"
+      >
+        {lang === "en" ? "DE" : "EN"}
+      </button>
     </aside>
   );
 }

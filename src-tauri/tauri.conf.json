@@ -44,25 +44,7 @@
       "icons/icon.ico"
     ],
     "macOS": {
-      "entitlements": "entitlements.plist",
-      "infoPlist": {
-        "NSScreenCaptureUsageDescription": "ClarityDesk requires screen recording permission to analyze displayed content. No data is stored or transmitted.",
-        "NSAppleEventsUsageDescription": "ClarityDesk uses Apple Events for active window detection.",
-        "NSMicrophoneUsageDescription": "Not required — microphone is never accessed."
-      }
-    }
-  },
-  "plugins": {
-    "shell": {
-      "execute": true,
-      "sidecar": false,
-      "scope": [
-        {
-          "name": "tesseract",
-          "cmd": "tesseract",
-          "args": true
-        }
-      ]
+      "entitlements": "entitlements.plist"
     }
   }
 }

@@ -7,6 +7,7 @@ mod state;
 
 use state::AppState;
 use commands::*;
+use tauri::Manager;
 
 fn main() {
     tracing_subscriber::fmt()
@@ -19,11 +20,19 @@ fn main() {
     let state = AppState::new();
 
     tauri::Builder::default()
-        .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_notification::init())
         .manage(state)
+        .setup(|app| {
+            #[cfg(target_os = "macos")]
+            app.set_activation_policy(tauri::ActivationPolicy::Regular);
+            if let Some(window) = app.get_webview_window("main") {
+                window.show()?;
+                window.set_focus()?;
+            }
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             // Capture
             list_screens,
