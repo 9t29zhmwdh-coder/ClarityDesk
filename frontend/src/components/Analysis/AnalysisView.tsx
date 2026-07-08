@@ -3,12 +3,14 @@ import { RefreshCw, Copy, ChevronDown, ChevronRight, Loader2, ImageOff } from "l
 import clsx from "clsx";
 import { useClarityStore } from "../../stores/clarityStore";
 import { AnalyzedBlock, blockTypeBadgeClass, blockTypeLabel } from "../../lib/tauri";
+import { useT } from "../../lib/i18n";
 
 export function AnalysisView() {
   const { lastFrame, lastResult, isAnalyzing, analyze } = useClarityStore();
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set());
   const [tab, setTab] = useState<"original" | "output">("output");
   const [copied, setCopied] = useState<string | null>(null);
+  const t = useT();
 
   function toggle(id: string) {
     setExpandedBlocks((prev) => {
@@ -28,7 +30,7 @@ export function AnalysisView() {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 text-muted">
         <ImageOff size={40} strokeWidth={1} />
-        <p className="text-sm">No capture yet. Use Dashboard to capture the screen.</p>
+        <p className="text-sm">{t("noCaptureYet")}</p>
       </div>
     );
   }
@@ -44,23 +46,23 @@ export function AnalysisView() {
           </p>
           {lastResult && (
             <span className="badge bg-surface-3 text-muted">
-              {lastResult.totalBlocks} block{lastResult.totalBlocks !== 1 ? "s" : ""}
+              {t(lastResult.totalBlocks === 1 ? "blockSingular" : "blockPlural", { n: lastResult.totalBlocks })}
             </span>
           )}
         </div>
 
         {/* Tab toggle */}
         <div className="flex bg-surface-2 rounded-lg p-0.5 text-xs">
-          {(["output", "original"] as const).map((t) => (
+          {(["output", "original"] as const).map((tabId) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
+              key={tabId}
+              onClick={() => setTab(tabId)}
               className={clsx(
                 "px-3 py-1 rounded-md capitalize transition-colors",
-                tab === t ? "bg-surface-3 text-slate-100" : "text-muted hover:text-slate-300",
+                tab === tabId ? "bg-surface-3 text-slate-100" : "text-muted hover:text-slate-300",
               )}
             >
-              {t === "output" ? "Analyzed" : "Original"}
+              {tabId === "output" ? t("analyzed") : t("original")}
             </button>
           ))}
         </div>
@@ -71,7 +73,7 @@ export function AnalysisView() {
           className="btn-ghost text-xs"
         >
           {isAnalyzing ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />}
-          Re-analyze
+          {t("reanalyze")}
         </button>
       </div>
 
@@ -88,7 +90,7 @@ export function AnalysisView() {
       {isAnalyzing && (
         <div className="flex-1 flex flex-col items-center justify-center gap-3 text-muted">
           <Loader2 size={28} className="animate-spin text-accent" />
-          <p className="text-sm">Analyzing content with local AI…</p>
+          <p className="text-sm">{t("analyzingWithAi")}</p>
         </div>
       )}
 
@@ -97,8 +99,8 @@ export function AnalysisView() {
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {lastResult.blocks.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-muted gap-2">
-              <p className="text-sm">No text blocks detected.</p>
-              <p className="text-xs">Try a different region or check OCR language settings.</p>
+              <p className="text-sm">{t("noBlocksDetected")}</p>
+              <p className="text-xs">{t("tryDifferentRegion")}</p>
             </div>
           ) : (
             lastResult.blocks.map((block) => (
@@ -119,7 +121,7 @@ export function AnalysisView() {
       {/* No result yet */}
       {!isAnalyzing && !lastResult && (
         <div className="flex-1 flex flex-col items-center justify-center gap-3 text-muted">
-          <p className="text-sm">Screen captured. Click Re-analyze or use the Dashboard to analyze.</p>
+          <p className="text-sm">{t("screenCapturedPrompt")}</p>
         </div>
       )}
     </div>

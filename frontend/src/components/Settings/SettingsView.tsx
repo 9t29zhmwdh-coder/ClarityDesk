@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Save, RotateCcw, CheckCircle } from "lucide-react";
 import { useClarityStore } from "../../stores/clarityStore";
 import { Settings } from "../../lib/tauri";
+import { useT } from "../../lib/i18n";
 import clsx from "clsx";
 
 export function SettingsView() {
   const { settings, loadSettings, saveSettings, ollamaStatus } = useClarityStore();
   const [form, setForm] = useState<Settings | null>(null);
   const [saved, setSaved] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     if (!settings) loadSettings();
@@ -17,7 +19,7 @@ export function SettingsView() {
     if (settings && !form) setForm(structuredClone(settings));
   }, [settings]);
 
-  if (!form) return <div className="p-6 text-muted text-sm">Loading settings…</div>;
+  if (!form) return <div className="p-6 text-muted text-sm">{t("loadingSettings")}</div>;
 
   function update<K extends keyof Settings>(key: K, value: Settings[K]) {
     setForm((prev) => prev ? { ...prev, [key]: value } : prev);
@@ -38,16 +40,16 @@ export function SettingsView() {
     <div className="flex flex-col h-full overflow-y-auto">
       {/* Toolbar */}
       <div className="flex items-center justify-between px-5 py-3 border-b border-surface-3 bg-surface-1 shrink-0">
-        <h2 className="text-sm font-semibold">Settings</h2>
+        <h2 className="text-sm font-semibold">{t("settingsTitle")}</h2>
         <div className="flex gap-2">
           <button onClick={handleReset} className="btn-ghost text-xs">
-            <RotateCcw size={13} /> Reset
+            <RotateCcw size={13} /> {t("reset")}
           </button>
           <button
             onClick={handleSave}
             className={clsx("btn text-xs", saved ? "btn-ghost text-success" : "btn-primary")}
           >
-            {saved ? <><CheckCircle size={13} /> Saved</> : <><Save size={13} /> Save</>}
+            {saved ? <><CheckCircle size={13} /> {t("saved")}</> : <><Save size={13} /> {t("save")}</>}
           </button>
         </div>
       </div>
@@ -56,14 +58,14 @@ export function SettingsView() {
         {/* Ollama */}
         <section>
           <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-            Local AI (Ollama)
+            {t("localAiTitle")}
             <span className={clsx("badge", ollamaStatus?.connected ? "bg-success/20 text-success" : "bg-danger/20 text-danger")}>
-              {ollamaStatus?.connected ? "Online" : "Offline"}
+              {ollamaStatus?.connected ? t("connected") : t("offline")}
             </span>
           </h3>
           <div className="space-y-3">
             <div>
-              <label className="label">Ollama Host</label>
+              <label className="label">{t("ollamaHost")}</label>
               <input
                 className="input"
                 value={form.ollamaHost}
@@ -72,7 +74,7 @@ export function SettingsView() {
               />
             </div>
             <div>
-              <label className="label">Model</label>
+              <label className="label">{t("model")}</label>
               <input
                 className="input"
                 value={form.ollamaModel}
@@ -106,22 +108,22 @@ export function SettingsView() {
 
         {/* Analysis */}
         <section>
-          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">Analysis</h3>
+          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("analysisSection")}</h3>
           <div className="space-y-3">
             <div>
-              <label className="label">Default Mode</label>
+              <label className="label">{t("defaultMode")}</label>
               <select
                 className="input"
                 value={form.defaultMode}
                 onChange={(e) => update("defaultMode", e.target.value as Settings["defaultMode"])}
               >
-                <option value="smart">Smart (auto-detect)</option>
-                <option value="language">Language (translate)</option>
-                <option value="dev">Dev (explain code/logs)</option>
+                <option value="smart">{t("modeSmartOption")}</option>
+                <option value="language">{t("modeLanguageOption")}</option>
+                <option value="dev">{t("modeDevOption")}</option>
               </select>
             </div>
             <div>
-              <label className="label">Target Language</label>
+              <label className="label">{t("targetLanguage")}</label>
               <input
                 className="input"
                 value={form.targetLanguage}
@@ -134,9 +136,9 @@ export function SettingsView() {
 
         {/* OCR */}
         <section>
-          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">OCR</h3>
+          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("ocrSection")}</h3>
           <div>
-            <label className="label">OCR Language</label>
+            <label className="label">{t("ocrLanguage")}</label>
             <input
               className="input"
               value={form.ocrLanguage}
@@ -144,21 +146,21 @@ export function SettingsView() {
               placeholder="eng+deu"
             />
             <p className="text-xs text-muted mt-1">
-              Tesseract language codes separated by <code>+</code>. Example: <code>eng+deu+fra</code>
+              {t("ocrHintPrefix")} <code>+</code>. {t("ocrHintExample")} <code>eng+deu+fra</code>
             </p>
           </div>
         </section>
 
         {/* Hotkeys */}
         <section>
-          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">Hotkeys</h3>
+          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("hotkeysLabel")}</h3>
           <div className="grid grid-cols-2 gap-3">
             {(
               [
-                ["startStop",  "Start / Stop"],
-                ["devMode",    "Dev Mode"],
-                ["smartMode",  "Smart Mode"],
-                ["reAnalyze",  "Re-Analyze"],
+                ["startStop",  t("hkStartStop")],
+                ["devMode",    t("hkDev")],
+                ["smartMode",  t("hkSmart")],
+                ["reAnalyze",  t("hkReanalyzeLabel")],
               ] as const
             ).map(([key, label]) => (
               <div key={key}>
@@ -177,13 +179,13 @@ export function SettingsView() {
 
         {/* Privacy */}
         <section>
-          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">Privacy</h3>
+          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("privacySection")}</h3>
           <div className="space-y-3">
             {(
               [
-                ["storeCaptures", "Store captured images on disk"],
-                ["storeResults",  "Store analysis results on disk"],
-                ["showConsentOnStart", "Show consent dialog on startup"],
+                ["storeCaptures", t("privStoreCaptures")],
+                ["storeResults",  t("privStoreResults")],
+                ["showConsentOnStart", t("privShowConsent")],
               ] as const
             ).map(([key, label]) => (
               <label key={key} className="flex items-center gap-3 cursor-pointer">
@@ -200,8 +202,7 @@ export function SettingsView() {
             ))}
           </div>
           <div className="mt-3 p-3 rounded-lg bg-surface-2 text-xs text-muted">
-            ClarityDesk processes everything locally. No data leaves your device.
-            Tesseract and Ollama run entirely offline.
+            {t("privacyNote")}
           </div>
         </section>
       </div>

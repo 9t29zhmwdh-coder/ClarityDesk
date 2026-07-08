@@ -38,6 +38,3 @@ src-tauri/target/
 
 # Logs
 *.log
-
-# Icons (generate with: cargo tauri icon icons/source.png)
-src-tauri/icons/

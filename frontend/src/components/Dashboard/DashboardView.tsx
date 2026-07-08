@@ -14,12 +14,7 @@ import {
 import clsx from "clsx";
 import { useClarityStore } from "../../stores/clarityStore";
 import { AnalysisMode } from "../../lib/tauri";
-
-const MODES: { id: AnalysisMode; label: string; desc: string; Icon: typeof Languages }[] = [
-  { id: "language", label: "Language",  desc: "Translate text to your target language", Icon: Languages },
-  { id: "dev",      label: "Dev Mode",  desc: "Explain code, analyze logs & terminal", Icon: Terminal },
-  { id: "smart",    label: "Smart",     desc: "Auto-detect content and apply best mode", Icon: Zap },
-];
+import { useT } from "../../lib/i18n";
 
 export function DashboardView() {
   const {
@@ -31,6 +26,13 @@ export function DashboardView() {
     checkOllama, captureAndAnalyze,
     error, clearError,
   } = useClarityStore();
+  const t = useT();
+
+  const MODES: { id: AnalysisMode; label: string; desc: string; Icon: typeof Languages }[] = [
+    { id: "language", label: t("modeLanguageLabel"), desc: t("modeLanguageDesc"), Icon: Languages },
+    { id: "dev",      label: t("modeDevLabel"),       desc: t("modeDevDesc"),     Icon: Terminal },
+    { id: "smart",    label: t("modeSmartLabel"),     desc: t("modeSmartDesc"),   Icon: Zap },
+  ];
 
   useEffect(() => {
     checkOllama();
@@ -45,7 +47,7 @@ export function DashboardView() {
       {/* Header */}
       <div>
         <h1 className="text-xl font-semibold text-slate-100">ClarityDesk</h1>
-        <p className="text-sm text-muted mt-0.5">Universal Display Interpreter — offline, local AI</p>
+        <p className="text-sm text-muted mt-0.5">{t("appTagline")}</p>
       </div>
 
       {/* Consent Banner */}
@@ -54,13 +56,12 @@ export function DashboardView() {
           <div className="flex items-start gap-3">
             <AlertCircle size={18} className="text-accent mt-0.5 shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-medium text-slate-100">Permission Required</p>
+              <p className="text-sm font-medium text-slate-100">{t("consentTitle")}</p>
               <p className="text-xs text-muted mt-1">
-                ClarityDesk needs your consent to capture screen content. No data is stored or
-                transmitted — everything is processed locally.
+                {t("consentDesc")}
               </p>
               <button onClick={giveConsent} className="btn-primary mt-3 text-xs">
-                Allow Screen Analysis
+                {t("consentAllow")}
               </button>
             </div>
           </div>
@@ -72,19 +73,19 @@ export function DashboardView() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Cpu size={16} className="text-muted" />
-            <span className="text-sm font-medium">Local AI (Ollama)</span>
+            <span className="text-sm font-medium">{t("localAiTitle")}</span>
           </div>
           {ollamaStatus == null ? (
             <Loader2 size={14} className="text-muted animate-spin" />
           ) : ollamaStatus.connected ? (
             <div className="flex items-center gap-1.5">
               <CheckCircle size={14} className="text-success" />
-              <span className="text-xs text-success">Connected</span>
+              <span className="text-xs text-success">{t("connected")}</span>
             </div>
           ) : (
             <div className="flex items-center gap-1.5">
               <XCircle size={14} className="text-danger" />
-              <span className="text-xs text-danger">Offline</span>
+              <span className="text-xs text-danger">{t("offline")}</span>
             </div>
           )}
         </div>
@@ -97,14 +98,14 @@ export function DashboardView() {
         )}
         {ollamaStatus && !ollamaStatus.connected && (
           <p className="text-xs text-muted mt-2">
-            Start Ollama with <code className="text-slate-300">ollama serve</code> to enable AI analysis.
+            {t("startOllamaHintPrefix")} <code className="text-slate-300">ollama serve</code> {t("startOllamaHintSuffix")}
           </p>
         )}
       </div>
 
       {/* Mode Selector */}
       <div>
-        <p className="label">Analysis Mode</p>
+        <p className="label">{t("analysisModeLabel")}</p>
         <div className="grid grid-cols-3 gap-2">
           {MODES.map(({ id, label, desc, Icon }) => (
             <button
@@ -142,12 +143,12 @@ export function DashboardView() {
           {isBusy ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              {isCapturing ? "Capturing…" : "Analyzing…"}
+              {isCapturing ? t("capturing") : t("analyzing")}
             </>
           ) : (
             <>
               <Monitor size={16} />
-              Capture & Analyze
+              {t("captureAnalyze")}
             </>
           )}
         </button>
@@ -155,13 +156,13 @@ export function DashboardView() {
 
       {/* Hotkeys */}
       <div className="card">
-        <p className="label mb-2">Hotkeys</p>
+        <p className="label mb-2">{t("hotkeysLabel")}</p>
         <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
           {[
-            ["Alt+Shift+C", "Capture & Analyze"],
-            ["Alt+Shift+D", "Dev Mode"],
-            ["Alt+Shift+S", "Smart Mode"],
-            ["Alt+Shift+E", "Re-analyze"],
+            ["Alt+Shift+C", t("hkCapture")],
+            ["Alt+Shift+D", t("hkDev")],
+            ["Alt+Shift+S", t("hkSmart")],
+            ["Alt+Shift+E", t("hkReanalyze")],
           ].map(([key, desc]) => (
             <div key={key} className="flex items-center gap-2">
               <kbd className="px-1.5 py-0.5 rounded bg-surface-3 text-slate-300 font-mono text-[10px]">
@@ -177,10 +178,10 @@ export function DashboardView() {
       {lastFrame && (
         <div className="grid grid-cols-2 gap-3">
           {[
-            { label: "Last Capture", value: new Date(lastFrame.capturedAt).toLocaleTimeString() },
+            { label: t("lastCapture"), value: new Date(lastFrame.capturedAt).toLocaleTimeString() },
             {
-              label: "Blocks Found",
-              value: lastResult ? `${lastResult.totalBlocks}` : "—",
+              label: t("blocksFound"),
+              value: lastResult ? `${lastResult.totalBlocks}` : t("noData"),
             },
           ].map(({ label, value }) => (
             <div key={label} className="card text-center">
