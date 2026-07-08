@@ -12,6 +12,12 @@ ClarityDesk captures your screen, extracts text with OCR and analyzes it with a 
 
 [![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions) ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) ![AI | Ollama](https://img.shields.io/badge/AI-Ollama-black?logo=ollama&logoColor=white)
 
+> **How it runs:** ClarityDesk is a native desktop app, not a server or browser tool. It opens as its own window and has no tray icon or background service; it only captures and analyzes your screen while you actively trigger it.
+
+![ClarityDesk](docs/screenshot.png)
+
+**In practice:** you grant screen capture consent once, then trigger a capture via hotkey or button; ClarityDesk extracts the text with OCR and shows a translated, explained or diagnosed version side-by-side with the original. Everything runs locally through Ollama; nothing is sent anywhere or written to disk.
+
 ---
 
 ## Features
@@ -72,6 +78,17 @@ cargo run -p cd-cli -- translate "Hello, world" --lang Deutsch
 # Check Ollama connection
 cargo run -p cd-cli -- status
 ```
+
+---
+
+## Uninstall / Cleanup
+
+ClarityDesk keeps settings in memory only; nothing is written to disk between runs, so removal is just deleting the app itself:
+
+- **macOS:** delete the app bundle (or run `cargo tauri build` output cleanup: `rm -rf target/`)
+- **Windows:** uninstall via Settings → Apps, or delete the build output folder
+
+No config files, caches or registry entries are left behind.
 
 ---
 
