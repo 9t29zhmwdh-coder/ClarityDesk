@@ -12,6 +12,12 @@ ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ih
 
 [![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions) ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) ![AI | Ollama](https://img.shields.io/badge/AI-Ollama-black?logo=ollama&logoColor=white)
 
+> **So läuft es:** ClarityDesk ist eine native Desktop-App, kein Server oder Browser-Tool. Sie öffnet sich als eigenes Fenster, ohne Tray-Icon oder Hintergrunddienst; sie erfasst und analysiert deinen Bildschirm nur, wenn du sie aktiv auslöst.
+
+![ClarityDesk](docs/screenshot.de.png)
+
+**In der Praxis:** du erteilst einmal die Zustimmung zur Bildschirmerfassung, löst dann per Hotkey oder Button eine Erfassung aus; ClarityDesk extrahiert den Text per OCR und zeigt eine übersetzte, erklärte oder diagnostizierte Version neben dem Original. Alles läuft lokal über Ollama; nichts wird irgendwohin gesendet oder auf die Festplatte geschrieben.
+
 ---
 
 ## Funktionen
@@ -72,6 +78,17 @@ cargo run -p cd-cli -- translate "Hello, world" --lang Deutsch
 # Ollama-Verbindung prüfen
 cargo run -p cd-cli -- status
 ```
+
+---
+
+## Deinstallation / Aufräumen
+
+ClarityDesk hält Einstellungen nur im Arbeitsspeicher; zwischen den Läufen wird nichts auf die Festplatte geschrieben, Entfernen ist also nur das Löschen der App selbst:
+
+- **macOS:** App-Bundle löschen (oder Build-Output aufräumen: `rm -rf target/`)
+- **Windows:** Deinstallation über Einstellungen → Apps, oder Build-Output-Ordner löschen
+
+Es bleiben keine Konfigurationsdateien, Caches oder Registry-Einträge zurück.
 
 ---
 
