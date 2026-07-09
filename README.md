@@ -49,6 +49,8 @@ ClarityDesk captures your screen, extracts text with OCR and analyzes it with a 
 
 **macOS:** Grant *Screen Recording* permission in System Settings → Privacy & Security.
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
 ---
 
 ## Quick Start
