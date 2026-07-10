@@ -20,6 +20,10 @@ ClarityDesk captures your screen, extracts text with OCR and analyzes it with a 
 
 ---
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
+---
+
 ## Features
 
 | Feature | Description |
@@ -48,8 +52,6 @@ ClarityDesk captures your screen, extracts text with OCR and analyzes it with a 
 - macOS 12+ / Windows 10+ / Linux (Wayland or X11)
 
 **macOS:** Grant *Screen Recording* permission in System Settings → Privacy & Security.
-
-> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
 
 ---
 

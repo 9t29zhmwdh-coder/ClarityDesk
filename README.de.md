@@ -20,6 +20,10 @@ ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ih
 
 ---
 
+> 🌱 Neu hier? → [Schritt-für-Schritt-Anleitung für Einsteiger](GETTING_STARTED.md)
+
+---
+
 ## Funktionen
 
 | Funktion | Beschreibung |

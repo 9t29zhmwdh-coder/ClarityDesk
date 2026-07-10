@@ -2,6 +2,12 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.1.2] - 2026-07-10
+
+### Added
+
+- Added the "New here?" beginner guide callout to README.md (moved above Features) and README.de.md (was missing)
+
 ## [0.1.0] - 2026-06-14
 
 ### Added
