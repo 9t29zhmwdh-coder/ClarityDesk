@@ -2,6 +2,12 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.1.3] - 2026-07-11
+
+### Fixed
+
+- Updated actions/setup-node to its latest major version in CI, since GitHub is deprecating the Node.js 20 runtime and the previous version was being forced onto Node 24 and crashing during post-run cleanup.
+
 ## [0.1.2] - 2026-07-10
 
 ### Added
