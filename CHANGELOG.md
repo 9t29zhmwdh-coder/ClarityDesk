@@ -2,6 +2,16 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.1.4] - 2026-07-11
+
+### Added
+
+- Documented Dual-Licensing assessment (Community-only) in ROADMAP.md.
+
+### Fixed
+
+- Removed em-dashes from ROADMAP.md and SECURITY.md headings and body text.
+
 ## [0.1.3] - 2026-07-11
 
 ### Fixed
