@@ -1,4 +1,4 @@
-# ClarityDesk — Architecture
+# ClarityDesk: Architecture
 
 ## Overview
 
@@ -29,7 +29,7 @@ workspace with a Tauri v2 desktop shell and a React frontend.
 
 ## Crates
 
-### `cd-core` — Core Engine
+### `cd-core`: Core Engine
 
 | Module | Responsibility |
 |--------|----------------|
@@ -39,16 +39,16 @@ workspace with a Tauri v2 desktop shell and a React frontend.
 | `semantic/` | OllamaClient REST adapter + mode-specific prompt templates |
 | `models/` | Shared data types (CaptureFrame, AnalysisBlock, Settings) |
 
-### `cd-cli` — Command-Line Interface
+### `cd-cli`: Command-Line Interface
 
 Standalone binary for scripted use: `claritydesk capture|translate|status`.
 
-### `src-tauri` — Desktop Shell
+### `src-tauri`: Desktop Shell
 
 Tauri v2 application bridging the React frontend to `cd-core` via IPC commands.
 Active plugins: `shell`, `fs`, `global-shortcut`, `notification`.
 
-### `frontend` — React UI
+### `frontend`: React UI
 
 React 18 + TypeScript + Tailwind CSS + Zustand. Three views: Dashboard, Analysis, Settings.
 
@@ -85,7 +85,7 @@ See [PRIVACY.md](PRIVACY.md) for the full policy.
 
 | Dependency | Purpose | Network |
 |------------|---------|---------|
-| Tesseract OCR | Text extraction | none — local binary |
+| Tesseract OCR | Text extraction | none, local binary |
 | Ollama | AI inference | localhost:11434 only |
 | `screenshots` crate | Screen capture | none |
 

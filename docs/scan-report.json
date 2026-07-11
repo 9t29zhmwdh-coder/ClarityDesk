@@ -4,7 +4,7 @@
   "total_repos": 20,
   "skeleton_schema_version": "1.0",
   "repos": [
-    {"name":"ClarityDesk","language":"Rust/Tauri","earliest_commit":"2026-06-14T18:55:28Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"complete","notes":"First repo processed — canonical template"},
+    {"name":"ClarityDesk","language":"Rust/Tauri","earliest_commit":"2026-06-14T18:55:28Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"complete","notes":"First repo processed, canonical template"},
     {"name":"BugRadar","language":"Rust/Tauri","earliest_commit":"2026-06-12T10:20:38Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
     {"name":"LogLens","language":"Rust/Tauri","earliest_commit":"2026-06-12T11:24:55Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
     {"name":"MailPilot","language":"Rust/Tauri","earliest_commit":"2026-06-12T16:46:38Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md + SECURITY.md"},
@@ -23,6 +23,6 @@
     {"name":"SwiftAgent","language":"Swift","earliest_commit":"2026-06-15T19:15:20Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"Has CONTRIBUTING.md"},
     {"name":"JellyFin-MediaStack","language":"Docker","earliest_commit":"2026-06-13T00:28:46Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":""},
     {"name":"9t29zhmwdh-coder.github.io","language":"HTML","earliest_commit":"2026-06-13T00:33:33Z","license":"MIT","release_version":"v0.1.0","skeleton_status":"pending","notes":"GitHub Pages"},
-    {"name":"9t29zhmwdh-coder","language":"Profile","earliest_commit":"2026-06-13T00:44:24Z","license":"none","release_version":"none","skeleton_status":"pending","notes":"Profile README only — no release, SKELETON.md only"}
+    {"name":"9t29zhmwdh-coder","language":"Profile","earliest_commit":"2026-06-13T00:44:24Z","license":"none","release_version":"none","skeleton_status":"pending","notes":"Profile README only, no release, SKELETON.md only"}
   ]
 }
