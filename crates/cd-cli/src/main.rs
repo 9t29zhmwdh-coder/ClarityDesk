@@ -8,7 +8,7 @@ use cd_core::{
 };
 
 #[derive(Parser)]
-#[command(name = "claritydesk", about = "ClarityDesk CLI — Display Interpreter")]
+#[command(name = "claritydesk", about = "ClarityDesk CLI: Display Interpreter")]
 struct Cli {
     #[command(subcommand)]
     command: Commands,

@@ -13,8 +13,8 @@ pub fn code_explain_prompt(code: &str, lang_hint: Option<&str>) -> String {
     let lang_str = lang_hint.map(|l| format!(" ({l})")).unwrap_or_default();
     format!(
         "Explain this code{lang_str} concisely:\n\
-        1. Purpose — what does it do?\n\
-        2. How it works — key logic\n\
+        1. Purpose: what does it do?\n\
+        2. How it works: key logic\n\
         3. Potential issues or improvements\n\n\
         Keep the answer brief and developer-focused.\n\n\
         Code:\n```\n{code}\n```"
@@ -36,7 +36,7 @@ pub fn log_prompt(log: &str) -> String {
     format!(
         "Analyze these log entries:\n\
         1. Summary of events\n\
-        2. Errors or warnings — what do they indicate?\n\
+        2. Errors or warnings: what do they indicate?\n\
         3. Suggested fix or investigation path\n\n\
         Output:\n{log}"
     )

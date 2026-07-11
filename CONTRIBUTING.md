@@ -10,7 +10,7 @@ Include your OS, Rust version, Tesseract version, Ollama version and model name.
 ## Feature Requests
 
 Use the [Feature Request](.github/ISSUE_TEMPLATE/feature_request.md) template.
-Check [ROADMAP.md](ROADMAP.md) first — it may already be planned.
+Check [ROADMAP.md](ROADMAP.md) first, it may already be planned.
 
 ## Code Contributions
 
@@ -30,8 +30,8 @@ Check [ROADMAP.md](ROADMAP.md) first — it may already be planned.
 ## Code Style
 
 - Follow `rustfmt` defaults (`cargo fmt`)
-- No `unwrap()` in production code — use `?` or handle errors explicitly
-- No `println!()` in library code — use `tracing`
+- No `unwrap()` in production code, use `?` or handle errors explicitly
+- No `println!()` in library code, use `tracing`
 - Frontend: follow the existing Tailwind + Zustand patterns
 
 ## Privacy Rules

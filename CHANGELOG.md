@@ -2,6 +2,12 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.2.5] - 2026-07-11
+
+### Fixed
+
+- Removed an eszett and em-dashes from TEMPLATE_NOTES.md, ARCHITECTURE.md, CONTRIBUTING.md, SKELETON.md, docs/scan-report.json, and three Rust source files. The project uses Swiss German orthography (ss, not ß).
+
 ## [0.2.4] - 2026-07-11
 
 ### Fixed

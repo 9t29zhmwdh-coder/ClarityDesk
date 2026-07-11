@@ -60,7 +60,7 @@ impl OcrEngine {
 }
 
 fn parse_hocr(hocr: &str) -> Result<Vec<TextBlock>> {
-    // Extract ocr_par blocks — paragraph-level grouping
+    // Extract ocr_par blocks: paragraph-level grouping
     let mut blocks = Vec::new();
     let par_re = regex_lite::Regex::new(r#"class='ocr_par'[^>]*title='bbox (\d+) (\d+) (\d+) (\d+)[^']*'[^>]*>([\s\S]*?)</p>"#)
         .map_err(|e| CdError::Ocr(e.to_string()))?;
