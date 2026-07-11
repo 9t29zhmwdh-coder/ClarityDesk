@@ -1,4 +1,4 @@
-# Security Policy — ClarityDesk
+# Security Policy: ClarityDesk
 
 ## Supported Versions
 
@@ -19,7 +19,7 @@ You can expect a response within 7 days.
 
 ## Security Design
 
-- **No external network calls** except `localhost:11434` (Ollama) — configurable
+- **No external network calls** except `localhost:11434` (Ollama), configurable
 - **No file writes** during analysis (RAM-only processing)
 - **macOS entitlements** limited to screen recording and shell (Tesseract only)
 - **No third-party analytics SDKs**
@@ -28,4 +28,4 @@ You can expect a response within 7 days.
 ## Known Limitations
 
 - Screen capture requires OS-level permission (macOS: Screen Recording)
-- The Ollama endpoint URL is configurable — do not point it at an untrusted server
+- The Ollama endpoint URL is configurable, do not point it at an untrusted server
