@@ -2,6 +2,12 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.2.8] - 2026-07-13
+
+### Added
+
+- Documented the EN/DE language toggle in README.md/README.de.md; it was already implemented and working but not mentioned.
+
 ## [0.2.7] - 2026-07-12
 
 ### Fixed
