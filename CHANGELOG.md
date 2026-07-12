@@ -2,6 +2,12 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.2.7] - 2026-07-12
+
+### Fixed
+
+- `.cargo/config.toml` had an unscoped `[build]` section applying macOS-only linker flags (`-C link-arg=-undefined -C link-arg=dynamic_lookup`) to every target, including Windows and Linux. This broke the very first cross-platform release build (v0.2.6): the Windows build failed with `LINK1181: cannot open input file 'dynamic_lookup.obj'` because that flag is meaningless to MSVC's linker. Removed the unscoped entry; the target-scoped `[target.aarch64-apple-darwin]`/`[target.x86_64-apple-darwin]` entries (which are correct) are unchanged.
+
 ## [0.2.6] - 2026-07-12
 
 ### Added
