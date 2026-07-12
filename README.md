@@ -22,6 +22,8 @@ ClarityDesk captures your screen, extracts text with OCR and analyzes it with a 
 
 ---
 
+ClarityDesk's UI is available in English (default) and German; switch anytime with the language toggle.
+
 **In practice:** you grant screen capture consent once, then trigger a capture via hotkey or button; ClarityDesk extracts the text with OCR and shows a translated, explained or diagnosed version side-by-side with the original. Everything runs locally through Ollama; nothing is sent anywhere or written to disk.
 
 ---

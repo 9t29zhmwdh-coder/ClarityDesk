@@ -22,6 +22,8 @@ ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ih
 
 ---
 
+Die Oberfläche von ClarityDesk ist auf Englisch (Standard) und Deutsch verfügbar; umschaltbar über den Sprachtoggle.
+
 **In der Praxis:** du erteilst einmal die Zustimmung zur Bildschirmerfassung, löst dann per Hotkey oder Button eine Erfassung aus; ClarityDesk extrahiert den Text per OCR und zeigt eine übersetzte, erklärte oder diagnostizierte Version neben dem Original. Alles läuft lokal über Ollama; nichts wird irgendwohin gesendet oder auf die Festplatte geschrieben.
 
 ---
