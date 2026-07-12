@@ -2,6 +2,17 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [0.2.6] - 2026-07-12
+
+### Added
+
+- Release workflow (`.github/workflows/release.yml`): builds and attaches macOS (DMG), Windows (NSIS installer), and Linux (AppImage) bundles to a GitHub Release on every tag push. Previously, no release ever had an installer attached.
+- README/README.de.md: Download section linking to the latest release's installers.
+
+### Fixed
+
+- All GitHub Actions in `ci.yml` pinned to a commit SHA, matching the portfolio's Action Pinning standard.
+
 ## [0.2.5] - 2026-07-11
 
 ### Fixed

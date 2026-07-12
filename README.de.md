@@ -16,6 +16,12 @@ ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ih
 
 ![ClarityDesk](docs/screenshot.de.png)
 
+---
+
+> 💾 **Download:** [macOS (DMG)](https://github.com/9t29zhmwdh-coder/ClarityDesk/releases/latest/download/ClarityDesk.dmg) · [Windows (Installer)](https://github.com/9t29zhmwdh-coder/ClarityDesk/releases/latest/download/ClarityDesk-Setup.exe) · [Linux (AppImage)](https://github.com/9t29zhmwdh-coder/ClarityDesk/releases/latest/download/ClarityDesk.AppImage): immer das neueste Release, nicht code-signiert/notarisiert (Gatekeeper/SmartScreen warnen beim ersten Start). Oder aus dem Quellcode bauen, siehe Erste Schritte unten.
+
+---
+
 **In der Praxis:** du erteilst einmal die Zustimmung zur Bildschirmerfassung, löst dann per Hotkey oder Button eine Erfassung aus; ClarityDesk extrahiert den Text per OCR und zeigt eine übersetzte, erklärte oder diagnostizierte Version neben dem Original. Alles läuft lokal über Ollama; nichts wird irgendwohin gesendet oder auf die Festplatte geschrieben.
 
 ---
