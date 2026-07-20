@@ -11,6 +11,7 @@
 ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ihn mit einem lokalen KI-Modell: Übersetzung, Code-Erklärung, Log-Analyse und Terminal-Diagnose; ohne Cloud, ohne Datenspeicherung, ohne Account.
 
 [![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/ClarityDesk/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/ClarityDesk)
+
 ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) ![AI | Ollama](https://img.shields.io/badge/AI-Ollama-black?logo=ollama&logoColor=white)
 
 > **So läuft es:** ClarityDesk ist eine native Desktop-App, kein Server oder Browser-Tool. Sie öffnet sich als eigenes Fenster, ohne Tray-Icon oder Hintergrunddienst; sie erfasst und analysiert deinen Bildschirm nur, wenn du sie aktiv auslöst.
