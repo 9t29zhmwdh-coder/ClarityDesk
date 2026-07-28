@@ -2,6 +2,16 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.0.2] - 2026-07-28
+
+### Added
+
+- `.github/dependabot.yml`, covering GitHub Actions, the Cargo workspace and the frontend npm packages, with grouped weekly updates. The file was missing, and without it a repository receives no version updates at all: security alerts only fire for disclosed vulnerabilities. Follows `engineering-standards` v0.10.0.
+
+### Fixed
+
+- `actions/checkout` was pinned to two different SHAs: v6 in `ci.yml` and `release.yml`, v7 in `scorecard.yml`. All three now use v7.0.1 with the full version in the comment, per `engineering-standards` `standards/ci-cd.md` section 2. Drift like this is what happens when one workflow is updated by a PR that does not touch the others.
+
 ## [1.0.1] - 2026-07-20
 
 ### Changed
