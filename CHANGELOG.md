@@ -2,6 +2,18 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.0.10] - 2026-07-31
+
+### Added
+
+- `SECURITY.md` records GHSA-wrw7-89jp-8q8g against `glib` 0.18.5, which cannot be fixed from this repository because Tauri 2.11.5 pins `gtk ^0.18` and no patched 0.18.x exists. The entry states the dependency path, the failed upgrade attempt, the exposure, and what would end it.
+
+### Fixed
+
+- The supported-versions table still listed `0.1.x`, a line that no longer exists.
+
+---
+
 ## [1.0.9] - 2026-07-31
 
 ### Changed
