@@ -2,6 +2,14 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.0.9] - 2026-07-31
+
+### Changed
+
+- Both READMEs now open with the three situations the tool exists for, all variants of text that sits in front of you and cannot be selected, rather than with the category "universal display interpreter". A short paragraph says the obvious thing: if the text is selectable, copy it and skip the OCR.
+
+---
+
 ## [1.0.8] - 2026-07-30
 
 ### Added

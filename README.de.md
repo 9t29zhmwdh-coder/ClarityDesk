@@ -6,9 +6,25 @@
 
 [🇬🇧 English Version](README.md)
 
-**Universeller Display-Interpreter mit OCR und lokaler KI. Bewusst offline, damit Bildschirminhalte das Gerät nie verlassen. Entwickelt mit Rust und Tauri.**
+**Erklärt, was auf deinem Bildschirm steht, ohne dass dieser Bildschirm je das Gerät verlässt.**
 
-ClarityDesk erfasst deinen Bildschirm, extrahiert Text per OCR und analysiert ihn mit einem lokalen KI-Modell: Übersetzung, Code-Erklärung, Log-Analyse und Terminal-Diagnose; ohne Cloud, ohne Datenspeicherung, ohne Account.
+Ein Stacktrace in einer Sprache, die du nicht liest. Ein Konfigurationsdialog
+in einer VM ohne Zwischenablage. Ein Fehler auf einem Screenshot, den dir
+jemand in den Chat geworfen hat. Immer dasselbe Muster: der Text steht direkt
+vor dir und ist trotzdem unerreichbar, weil du ihn nicht markieren und damit
+nirgends einfügen kannst.
+
+ClarityDesk greift den Ausschnitt ab, liest ihn per OCR und stellt Übersetzung,
+Erklärung oder Diagnose neben das Original. Hotkey oder Button, mehr ist die
+Bedienung nicht.
+
+Es läuft gegen ein lokales Ollama-Modell. Nichts wird hochgeladen und nichts
+auf die Festplatte geschrieben, und genau darum geht es, wenn auf dem Schirm
+ein Kundensystem oder ein Produktivlog steht.
+
+**Nichts für dich, wenn** sich der Text markieren lässt. Dann kopierst du ihn
+und fügst ihn in das Modell ein, das du ohnehin nutzt; OCR fügt da nur die
+Chance hinzu, sich zu verlesen.
 
 [![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/ClarityDesk/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/ClarityDesk) [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/13715/badge)](https://www.bestpractices.dev/projects/13715)
 
