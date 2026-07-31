@@ -6,9 +6,23 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**Universal Display Interpreter with OCR and local AI. Offline by design, so your screen content never leaves the device. Built with Rust and Tauri.**
+**Explains whatever is on your screen, without that screen ever leaving your machine.**
 
-ClarityDesk captures your screen, extracts text with OCR and analyzes it with a local AI model: translation, code explanation, log analysis and terminal diagnostics; all without cloud, without data storage, without account.
+A stack trace in a language you do not read. A config dialog in a VM with no
+clipboard. An error in a screenshot someone pasted into a chat. In every case
+the text is right in front of you and unreachable: you cannot select it, so you
+cannot paste it into anything that would explain it.
+
+ClarityDesk grabs the region, reads it with OCR, and shows the translation, the
+explanation or the diagnosis next to the original. Hotkey or button, and that
+is the whole interaction.
+
+It runs against a local Ollama model. Nothing is uploaded, and nothing is
+written to disk, which is the point when the thing on screen is a customer
+system or a production log.
+
+**Not for you if** the text is selectable. Copy it and paste it into whatever
+model you already use; OCR only adds a chance to misread it.
 
 [![CI](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/ClarityDesk/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/ClarityDesk/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/ClarityDesk/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/ClarityDesk) [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/13715/badge)](https://www.bestpractices.dev/projects/13715)
 
