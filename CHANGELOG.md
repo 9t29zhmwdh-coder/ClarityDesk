@@ -2,6 +2,15 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.0.13] - 2026-08-01
+
+### Changed
+
+- `reqwest` 0.12.28 to 0.13.4, plus `thiserror` 1.0.69 to 2.0.19 and `base64` 0.22.1 to 0.23.0, all merged since 1.0.12 and carried by this one version rather than a release each.
+- The `reqwest` step replaces the TLS stack rather than merely raising a number: `native-tls`, `openssl`, `openssl-sys` and `openssl-macros` leave the tree, and `rustls-platform-verifier`, `rustls-native-certs` and `aws-lc-rs` take their place. It costs this application nothing, because it only ever talks to `http://localhost:11434`, so no certificate is verified at any point. What it buys is the removal of OpenSSL: only `openssl-probe` remains, and that crate merely locates the system certificate directory.
+
+---
+
 ## [1.0.12] - 2026-08-01
 
 ### Changed
