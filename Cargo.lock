@@ -594,7 +594,7 @@ dependencies = [
 
 [[package]]
 name = "cd-cli"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
  "cd-core",
@@ -605,7 +605,7 @@ dependencies = [
 
 [[package]]
 name = "cd-core"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -617,7 +617,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tempfile",
- "thiserror 1.0.69",
+ "thiserror 2.0.19",
  "tokio",
  "tracing",
  "uuid",
@@ -712,7 +712,7 @@ checksum = "c8d4a3bb8b1e0c1050499d1815f5ab16d04f0959b233085fb31653fbfc9d98f9"
 
 [[package]]
 name = "claritydesk-app"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
  "cd-core",
@@ -723,7 +723,7 @@ dependencies = [
  "tauri-plugin-fs",
  "tauri-plugin-global-shortcut",
  "tauri-plugin-notification",
- "thiserror 1.0.69",
+ "thiserror 2.0.19",
  "tokio",
  "tracing",
  "tracing-subscriber",
