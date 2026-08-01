@@ -369,6 +369,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 
 [[package]]
+name = "base64"
+version = "0.23.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b25655df2c3cdd83c5e5b293b88acd880332b2ddadd7c30ac43144fdc0033da9"
+
+[[package]]
 name = "bit-set"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -594,7 +600,7 @@ dependencies = [
 
 [[package]]
 name = "cd-cli"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
  "cd-core",
@@ -605,10 +611,10 @@ dependencies = [
 
 [[package]]
 name = "cd-core"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
- "base64 0.22.1",
+ "base64 0.23.0",
  "chrono",
  "image 0.25.10",
  "regex-lite",
@@ -712,7 +718,7 @@ checksum = "c8d4a3bb8b1e0c1050499d1815f5ab16d04f0959b233085fb31653fbfc9d98f9"
 
 [[package]]
 name = "claritydesk-app"
-version = "1.0.7"
+version = "1.0.12"
 dependencies = [
  "anyhow",
  "cd-core",
