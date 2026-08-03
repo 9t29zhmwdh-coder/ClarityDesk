@@ -1,6 +1,103 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-surface-1: #161b27;
+  --color-surface-2: #1d2333;
+  --color-surface-3: #252d3d;
+  --color-surface: #0f1117;
+
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f52d9;
+  --color-accent-muted: #6366f120;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-muted: #64748b;
+
+  --font-mono: JetBrains Mono, Fira Code, Consolas, monospace;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility btn {
+  @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium
+           transition-colors duration-150 cursor-pointer select-none;
+}
+
+@utility btn-primary {
+  @apply btn bg-accent hover:bg-accent-hover text-white;
+}
+
+@utility btn-ghost {
+  @apply btn text-slate-400 hover:text-slate-100 hover:bg-surface-2;
+}
+
+@utility btn-danger {
+  @apply btn bg-danger/10 text-danger hover:bg-danger/20;
+}
+
+@utility card {
+  @apply bg-surface-1 border border-surface-3 rounded-xl p-4;
+}
+
+@utility badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+
+@utility badge-code {
+  @apply badge bg-purple-500/20 text-purple-300;
+}
+
+@utility badge-terminal {
+  @apply badge bg-green-500/20 text-green-300;
+}
+
+@utility badge-log {
+  @apply badge bg-yellow-500/20 text-yellow-300;
+}
+
+@utility badge-text {
+  @apply badge bg-blue-500/20 text-blue-300;
+}
+
+@utility badge-header {
+  @apply badge bg-slate-500/20 text-slate-300;
+}
+
+@utility badge-table {
+  @apply badge bg-cyan-500/20 text-cyan-300;
+}
+
+@utility badge-ui {
+  @apply badge bg-pink-500/20 text-pink-300;
+}
+
+@utility input {
+  @apply bg-surface-2 border border-surface-3 rounded-lg px-3 py-2 text-sm
+           text-slate-100 placeholder-muted focus:outline-hidden focus:border-accent
+           transition-colors w-full;
+}
+
+@utility label {
+  @apply text-xs text-muted font-medium uppercase tracking-wider mb-1 block;
+}
 
 @layer base {
   * {
@@ -38,50 +135,5 @@
 
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted;
-  }
-}
-
-@layer components {
-  .btn {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium
-           transition-colors duration-150 cursor-pointer select-none;
-  }
-
-  .btn-primary {
-    @apply btn bg-accent hover:bg-accent-hover text-white;
-  }
-
-  .btn-ghost {
-    @apply btn text-slate-400 hover:text-slate-100 hover:bg-surface-2;
-  }
-
-  .btn-danger {
-    @apply btn bg-danger/10 text-danger hover:bg-danger/20;
-  }
-
-  .card {
-    @apply bg-surface-1 border border-surface-3 rounded-xl p-4;
-  }
-
-  .badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
-  }
-
-  .badge-code     { @apply badge bg-purple-500/20 text-purple-300; }
-  .badge-terminal { @apply badge bg-green-500/20 text-green-300; }
-  .badge-log      { @apply badge bg-yellow-500/20 text-yellow-300; }
-  .badge-text     { @apply badge bg-blue-500/20 text-blue-300; }
-  .badge-header   { @apply badge bg-slate-500/20 text-slate-300; }
-  .badge-table    { @apply badge bg-cyan-500/20 text-cyan-300; }
-  .badge-ui       { @apply badge bg-pink-500/20 text-pink-300; }
-
-  .input {
-    @apply bg-surface-2 border border-surface-3 rounded-lg px-3 py-2 text-sm
-           text-slate-100 placeholder-muted focus:outline-none focus:border-accent
-           transition-colors w-full;
-  }
-
-  .label {
-    @apply text-xs text-muted font-medium uppercase tracking-wider mb-1 block;
   }
 }

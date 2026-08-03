@@ -195,7 +195,7 @@ export function SettingsView() {
                   onChange={(e) =>
                     update("privacy", { ...form.privacy, [key]: e.target.checked })
                   }
-                  className="w-4 h-4 rounded accent-indigo-500"
+                  className="w-4 h-4 rounded-sm accent-indigo-500"
                 />
                 <span className="text-sm text-slate-300">{label}</span>
               </label>

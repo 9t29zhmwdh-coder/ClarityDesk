@@ -165,7 +165,7 @@ export function DashboardView() {
             ["Alt+Shift+E", t("hkReanalyze")],
           ].map(([key, desc]) => (
             <div key={key} className="flex items-center gap-2">
-              <kbd className="px-1.5 py-0.5 rounded bg-surface-3 text-slate-300 font-mono text-[10px]">
+              <kbd className="px-1.5 py-0.5 rounded-sm bg-surface-3 text-slate-300 font-mono text-[10px]">
                 {key}
               </kbd>
               <span className="text-muted">{desc}</span>

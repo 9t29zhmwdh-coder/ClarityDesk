@@ -82,7 +82,7 @@ export function AnalysisView() {
         <img
           src={`data:image/png;base64,${lastFrame.imagePngB64}`}
           alt="Captured screen"
-          className="h-full max-h-36 object-contain rounded opacity-80"
+          className="h-full max-h-36 object-contain rounded-sm opacity-80"
         />
       </div>
 
@@ -176,7 +176,7 @@ function BlockCard({
       {expanded && (
         <div className="border-t border-surface-3">
           {isCode ? (
-            <pre className="text-xs font-mono p-3 overflow-x-auto text-slate-300 leading-relaxed whitespace-pre-wrap break-words">
+            <pre className="text-xs font-mono p-3 overflow-x-auto text-slate-300 leading-relaxed whitespace-pre-wrap wrap-break-word">
               {content}
             </pre>
           ) : (
