@@ -12,7 +12,10 @@ export default defineConfig({
   envPrefix: ["VITE_", "TAURI_"],
   build: {
     target: ["es2021", "chrome105", "safari13"],
-    minify: !process.env.TAURI_DEBUG ? "esbuild" : false,
+    // Vite 8 liefert esbuild nicht mehr mit und minifiziert ueber oxc. Der
+    // feste Wert "esbuild" liess den Build hier abbrechen; true nimmt den
+    // Minifier, den Vite mitbringt.
+    minify: !process.env.TAURI_DEBUG,
     sourcemap: !!process.env.TAURI_DEBUG,
   },
 });

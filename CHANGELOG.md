@@ -2,6 +2,16 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.1.0] - 2026-08-03
+
+### Changed
+
+- Vite 6 to 8 and @vitejs/plugin-react 4 to 6. Vite 8 replaces Rollup with Rolldown and no longer ships esbuild, so the build config had to stop naming that minifier: it now takes whatever Vite brings, which is oxc. Output went from 228 kB of JavaScript to 221 kB and the build from 1.02s to 0.23s.
+- Tailwind CSS 3 to 4. `tailwind.config.ts` is gone; the eleven custom colours and the mono stack are theme variables in the stylesheet now, and the four button classes moved from a components layer to `@utility`. autoprefixer is no longer a dependency because version 4 prefixes itself.
+- Three occurrences of `rounded` became `rounded-sm`. Version 4 shifted the radius scale by one step, so the old name would have halved those corners without any error appearing.
+
+---
+
 ## [1.0.14] - 2026-08-02
 
 ### Changed
