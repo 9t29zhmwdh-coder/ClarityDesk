@@ -2,6 +2,15 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.2.0] - 2026-08-04
+
+### Changed
+
+- `lucide-react` 0.468 to 1.28, the first stable major. All thirteen icons this frontend imports were checked against the package under both versions and all thirteen are present in both.
+- `github/codeql-action` 4.37.3 to 4.37.4 and `actions/attest` 4.2.0 to 4.2.1, merged separately and carried by this version.
+
+---
+
 ## [1.1.1] - 2026-08-03
 
 ### Fixed
