@@ -35,6 +35,10 @@ A review found that ClarityDesk could not do what its README promised. This rele
 - The page gets only `core:default` permissions and a Content Security Policy; the unused `fs` and `notification` plugins are gone.
 - Default target language English; the CLI defaults match the app.
 
+### Security
+
+- `rustls` 0.23.43 to 0.23.45, closing RUSTSEC-2026-0285, TLS 1.3 handshake messages accepted across encryption level boundaries. It arrives through `reqwest`; `aws-lc-rs`, `aws-lc-sys` and `rustls-webpki` moved with it, nothing else in the lockfile changed. ClarityDesk talks plain HTTP to a local Ollama, so the TLS code is only reached with an HTTPS Ollama address.
+
 ### Removed
 
 - Settings that did nothing: store captures, store results, app whitelist, capture scale, include cursor.
