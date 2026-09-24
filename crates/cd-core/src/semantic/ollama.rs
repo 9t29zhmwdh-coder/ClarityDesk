@@ -9,7 +9,21 @@ struct GenerateRequest<'a> {
     model: &'a str,
     prompt: &'a str,
     stream: bool,
+    // Qwen models reason out loud by default; that text would end up in the answer.
+    think: bool,
+    options: GenerateOptions,
 }
+
+/// Without num_ctx Ollama reserves the model's full context window: in LifeSort
+/// qwen3.5:4b took 12.5 GB instead of 4. A capture group is capped well below this.
+#[derive(Debug, Serialize)]
+struct GenerateOptions {
+    num_ctx: u32,
+    temperature: f32,
+}
+
+const CONTEXT_TOKENS: u32 = 8192;
+const TEMPERATURE: f32 = 0.2;
 
 #[derive(Debug, Deserialize)]
 struct GenerateResponse {
@@ -55,6 +69,8 @@ impl OllamaClient {
             model: &self.model,
             prompt,
             stream: false,
+            think: false,
+            options: GenerateOptions { num_ctx: CONTEXT_TOKENS, temperature: TEMPERATURE },
         };
 
         let resp = self
@@ -100,17 +116,18 @@ impl OllamaClient {
 
         OllamaStatus {
             connected: version.is_some(),
+            model_installed: is_installed(&models, &self.model),
             version,
             available_models: models,
             host: self.host.clone(),
+            model: self.model.clone(),
         }
     }
+}
 
-    pub fn with_model(&self, model: impl Into<String>) -> Self {
-        Self {
-            host: self.host.clone(),
-            model: model.into(),
-            http: self.http.clone(),
-        }
-    }
+/// Ollama lists "llama3.2:latest" for a model pulled as "llama3.2".
+fn is_installed(models: &[String], wanted: &str) -> bool {
+    models
+        .iter()
+        .any(|m| m == wanted || m.strip_suffix(":latest") == Some(wanted))
 }

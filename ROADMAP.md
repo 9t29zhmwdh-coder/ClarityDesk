@@ -1,26 +1,26 @@
 # ClarityDesk: Roadmap
 
-## Current: v0.1.0, Framework Preview
+## Done in 1.3.0 (2026-09-24)
 
-- [x] Screen capture (full screen, active window, custom region)
-- [x] Tesseract OCR + HOCR block parsing
-- [x] Block classifier (Code / Terminal / Log / Text / Table / UI)
-- [x] Ollama REST client + mode-specific prompt templates
-- [x] Modes: Language (translation), Dev (code/log/terminal), Smart (auto-detect)
-- [x] App profiles (per-application mode presets)
-- [x] Side-panel view (original vs. analyzed)
-- [x] Tauri v2 desktop shell (macOS, Windows, Linux)
-- [x] CLI tool (`capture`, `translate`, `status`)
-- [x] Bilingual UI (English / German)
+Several items were ticked here long before they worked. 1.3.0 made them real:
 
-## v0.2.0, UX & Stability
+- [x] Screen capture that hides ClarityDesk first; focused-window capture through the hotkeys
+- [x] Region: drag a rectangle over the capture
+- [x] OCR that actually reads Tesseract 5 output, keeps lines and decodes entities
+- [x] App profiles that are read and pick the mode from the app in front
+- [x] System-wide hotkeys, customizable, with feedback when one is taken
+- [x] Settings saved between runs
+- [x] Clear errors when Tesseract, a language pack, Ollama or the model is missing
+- [x] Answers in the target language; one prompt per story instead of one per paragraph
+- [x] Installers: DMG, MSI/NSIS, AppImage, deb, rpm from the release workflow
 
-- [ ] Hotkey customization in Settings UI
-- [ ] Copy individual blocks to clipboard
+## Next
+
 - [ ] Session history panel (cleared on close, never persisted)
-- [ ] Drag-to-select region capture overlay
 - [ ] Tray icon with quick-capture shortcut
-- [ ] Improved error messages for Tesseract / Ollama connection failures
+- [ ] Choosing which screen the button captures on multi-monitor setups
+- [ ] Render the model's Markdown (bold, lists, code blocks) instead of showing it as plain text
+- [ ] Measuring OCR plus model quality on a fixed set of screenshots, like LifeSort does
 
 ## v0.3.0, Language & Model Expansion
 
@@ -38,7 +38,6 @@
 
 ## v1.0.0, Production Release
 
-- [ ] Cross-platform installers: DMG (macOS), MSI (Windows), AppImage (Linux)
 - [ ] Auto-update via GitHub Releases (local check, user-initiated download)
 - [ ] Accessibility audit (VoiceOver / Narrator support)
 - [ ] Full unit + integration test coverage

@@ -17,9 +17,9 @@ ClarityDesk grabs the region, reads it with OCR, and shows the translation, the
 explanation or the diagnosis next to the original. Hotkey or button, and that
 is the whole interaction.
 
-It runs against a local Ollama model. Nothing is uploaded, and nothing is
-written to disk, which is the point when the thing on screen is a customer
-system or a production log.
+It runs against a local Ollama model. Nothing is uploaded, and captures and
+results are never written to disk, which is the point when the thing on screen
+is a customer system or a production log.
 
 **Not for you if** the text is selectable. Copy it and paste it into whatever
 model you already use; OCR only adds a chance to misread it.
@@ -40,7 +40,7 @@ model you already use; OCR only adds a chance to misread it.
 
 ClarityDesk's UI is available in English (default) and German; switch anytime with the language toggle.
 
-**In practice:** you grant screen capture consent once, then trigger a capture via hotkey or button; ClarityDesk extracts the text with OCR and shows a translated, explained or diagnosed version side-by-side with the original. Everything runs locally through Ollama; nothing is sent anywhere or written to disk.
+**In practice:** you grant screen capture consent once, then trigger a capture via hotkey or button; ClarityDesk extracts the text with OCR and shows a translated, explained or diagnosed version side-by-side with the original. Everything runs locally through Ollama; captures and results stay in memory and are gone when the app closes.
 
 ---
 
@@ -52,28 +52,27 @@ ClarityDesk's UI is available in English (default) and German; switch anytime wi
 
 | Feature | Description |
 |---|---|
-| **Display Capture** | Capture full screen, active window or custom region |
-| **OCR Extraction** | Tesseract-powered text extraction with layout detection |
-| **Language Mode** | Translate any visible text to your target language |
-| **Dev Mode** | Explain code, analyze logs, diagnose terminal output |
-| **Smart Mode** | Auto-detects content type and applies the best analysis |
-| **Block Classifier** | Identifies Code, Terminal, Log, Paragraph, Table, UI blocks |
-| **Local AI (Ollama)** | Runs Llama, Mistral, CodeLlama or any compatible model |
-| **App Profiles** | Per-application mode presets (VS Code → Dev, Browser → Language) |
-| **Privacy-First** | No cloud, no storage, no telemetry: RAM-only processing |
-| **Hotkeys** | System-wide shortcuts for capture and mode switching |
-| **Side Panel** | Original vs. analyzed view with copy support |
+| **Capture button** | Hides ClarityDesk, captures the primary screen, comes back with the result |
+| **Hotkeys** | System-wide: capture the window in front, from any app, and bring the explanation forward |
+| **Region** | Drag a rectangle over the capture to read only that part |
+| **OCR** | Tesseract, lines and layout kept; uses the installed languages of those configured |
+| **Language mode** | Translates the text into your target language |
+| **Dev mode** | Explains a command, its code and its error as one story |
+| **Smart mode** | Decides between the two from what the capture contains |
+| **App profiles** | A hotkey capture picks its mode from the app in front: browsers translate, terminals and code editors explain; add your own as JSON |
+| **Local AI (Ollama)** | Default model `qwen3.5:4b-mlx` on a Mac (`qwen3.5:4b` elsewhere), any Ollama model works |
+| **Answer language** | Translations and explanations come in the target language you set |
+| **Settings** | Saved between runs; captures and results are not |
+| **CLI** | `claritydesk image <file>` explains a screenshot you already have |
 
 ---
 
 ## Requirements
 
-- [Rust](https://rustup.rs/) 1.77+
-- [Node.js](https://nodejs.org/) 20+
-- [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
-- [Ollama](https://ollama.ai) with at least one model (`ollama pull llama3.2`)
-- [Tesseract OCR](https://tesseract-ocr.github.io/tessdoc/Installation.html) (`brew install tesseract` on macOS)
+- [Ollama](https://ollama.com) with a model: `ollama pull qwen3.5:4b-mlx` on a Mac, `ollama pull qwen3.5:4b` elsewhere. It needs about 4.5 GB of memory while it answers.
+- [Tesseract OCR](https://tesseract-ocr.github.io/tessdoc/Installation.html) with the languages you read: `brew install tesseract tesseract-lang` on macOS. Plain `brew install tesseract` has English only.
 - macOS 12+ / Windows 10+ / Linux (Wayland or X11)
+- To build from source: [Rust](https://rustup.rs/), [Node.js](https://nodejs.org/) 20+, and the Tauri CLI (`npx @tauri-apps/cli@2` works without installing it)
 
 **macOS:** Grant *Screen Recording* permission in System Settings → Privacy & Security.
 
@@ -97,13 +96,16 @@ cargo tauri build
 
 **CLI usage:**
 ```bash
-# Capture & analyze current screen
-cargo run -p cd-cli -- capture --mode smart --lang Deutsch
+# Explain a screenshot you already have (PNG or JPEG), answer in German
+cargo run -p cd-cli -- image error.png --lang Deutsch
+
+# Capture the primary screen and analyze it
+cargo run -p cd-cli -- capture --mode smart
 
 # Translate a text string
 cargo run -p cd-cli -- translate "Hello, world" --lang Deutsch
 
-# Check Ollama connection
+# Check Ollama and whether the model is installed
 cargo run -p cd-cli -- status
 ```
 
@@ -111,25 +113,24 @@ cargo run -p cd-cli -- status
 
 ## Uninstall / Cleanup
 
-ClarityDesk keeps settings in memory only; nothing is written to disk between runs, so removal is just deleting the app itself:
+ClarityDesk writes one settings file and nothing else. Remove the app, then its folder:
 
 - **macOS:** delete the app bundle (or run `cargo tauri build` output cleanup: `rm -rf target/`)
 - **Windows:** uninstall via Settings → Apps, or delete the build output folder
 
-No config files, caches or registry entries are left behind.
+- **Settings:** `~/Library/Application Support/ch.raystudio.claritydesk` (macOS), `%APPDATA%\ch.raystudio.claritydesk` (Windows), `~/.config/ch.raystudio.claritydesk` (Linux). Own app profiles live in its `profiles` folder.
+- **Screen Recording** permission (macOS): remove ClarityDesk in System Settings, Privacy & Security.
+- The Ollama model: `ollama rm qwen3.5:4b-mlx`, if nothing else uses it.
 
 ---
 
 ## Privacy
 
-ClarityDesk is designed around explicit user consent:
-
-- No screen content is stored, logged or transmitted
-- All OCR runs locally via Tesseract
-- All AI analysis runs locally via Ollama
-- A consent dialog is shown on first use
-- An app whitelist can restrict which applications ClarityDesk may analyze
-- Everything is processed in RAM and discarded immediately after display
+- Captures and results stay in memory and are gone when ClarityDesk closes. Tesseract reads the image from a pipe, not from a file.
+- Only the settings are saved (Ollama address and model, languages, hotkeys, whether consent was given).
+- OCR runs locally via Tesseract; the text goes to the Ollama address in the settings, which is this computer unless you change it.
+- The capture button asks for consent once; hotkeys only run when you press them.
+- The page inside the app can call nothing but ClarityDesk's own commands; it has no file access.
 
 ---
 
@@ -139,20 +140,20 @@ ClarityDesk is designed around explicit user consent:
 ClarityDesk/
 ├── crates/
 │   ├── cd-core/             # Core engine: capture, OCR, analyzer, semantic
-│   │   ├── capture/         # Platform screen capture (screenshots crate)
-│   │   ├── ocr/             # Tesseract OCR + HOCR block parser
-│   │   ├── analyzer/        # Content classifier (Code/Terminal/Log/Text)
-│   │   └── semantic/        # Ollama REST client + prompt templates
-│   └── cd-cli/              # CLI tool (capture, translate, status)
-├── src-tauri/               # Tauri v2 desktop shell + IPC commands
+│   │   ├── capture/         # Screen, focused window, crop (xcap crate)
+│   │   ├── ocr/             # Tesseract via pipes, hOCR parser, block classifier
+│   │   ├── analyzer/        # Mode inference, grouping blocks into prompts
+│   │   ├── semantic/        # Ollama client + prompt templates
+│   │   └── profiles.rs      # App profiles: app name to mode
+│   └── cd-cli/              # CLI tool (capture, image, translate, status)
+├── src-tauri/               # Tauri v2 shell, IPC commands, global hotkeys
 ├── frontend/                # React + TypeScript + Tailwind UI
 │   └── src/components/
 │       ├── Dashboard/       # Mode selector, capture trigger, Ollama status
-│       ├── Analysis/        # Block viewer, original/analyzed toggle
+│       ├── Analysis/        # Block viewer, original/analyzed toggle, region picker
 │       └── Settings/        # Ollama, OCR, hotkeys, privacy config
 └── config/
-    ├── app-profiles/        # Per-app JSON presets
-    └── model-config.toml    # Model and language defaults
+    └── app-profiles/        # Built-in app profiles, compiled into the app
 ```
 
 ---

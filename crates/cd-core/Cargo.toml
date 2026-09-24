@@ -18,7 +18,7 @@ base64.workspace     = true
 image.workspace      = true
 tempfile.workspace   = true
 
-screenshots = "0.8"
+xcap = "0.9"
 regex-lite  = "0.1"
 
 [dev-dependencies]

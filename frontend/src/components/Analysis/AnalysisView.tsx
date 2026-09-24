@@ -1,13 +1,20 @@
-import { useState } from "react";
-import { RefreshCw, Copy, ChevronDown, ChevronRight, Loader2, ImageOff } from "lucide-react";
+import { useEffect, useState } from "react";
+import { RefreshCw, Copy, ChevronDown, ChevronRight, Loader2, ImageOff, Crop } from "lucide-react";
+import { RegionPicker } from "./RegionPicker";
 import clsx from "clsx";
 import { useClarityStore } from "../../stores/clarityStore";
-import { AnalyzedBlock, blockTypeBadgeClass, blockTypeLabel } from "../../lib/tauri";
+import { AnalyzedBlock, blockTypeBadgeClass, blockTypeKey, blockTypeLabel } from "../../lib/tauri";
 import { useT } from "../../lib/i18n";
 
 export function AnalysisView() {
-  const { lastFrame, lastResult, isAnalyzing, analyze } = useClarityStore();
+  const { lastFrame, lastResult, isAnalyzing, analyze, analyzeRegion } = useClarityStore();
+  const [picking, setPicking] = useState(false);
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set());
+  // One or two answers are opened right away; hiding the only result behind a click helps nobody.
+  useEffect(() => {
+    const blocks = lastResult?.blocks ?? [];
+    setExpandedBlocks(new Set(blocks.length <= 2 ? blocks.map((b) => b.blockId) : []));
+  }, [lastResult]);
   const [tab, setTab] = useState<"original" | "output">("output");
   const [copied, setCopied] = useState<string | null>(null);
   const t = useT();
@@ -67,6 +74,11 @@ export function AnalysisView() {
           ))}
         </div>
 
+        <button onClick={() => setPicking(true)} disabled={isAnalyzing} className="btn-ghost text-xs">
+          <Crop size={13} />
+          {t("pickRegion")}
+        </button>
+
         <button
           onClick={analyze}
           disabled={isAnalyzing}
@@ -77,13 +89,26 @@ export function AnalysisView() {
         </button>
       </div>
 
+      {picking && (
+        <RegionPicker
+          frame={lastFrame}
+          onClose={() => setPicking(false)}
+          onPick={(r) => {
+            setPicking(false);
+            analyzeRegion(r.x, r.y, r.width, r.height);
+          }}
+        />
+      )}
+
       {/* Screenshot preview */}
       <div className="shrink-0 bg-surface border-b border-surface-3 flex justify-center p-2" style={{ maxHeight: 160 }}>
-        <img
-          src={`data:image/png;base64,${lastFrame.imagePngB64}`}
-          alt="Captured screen"
-          className="h-full max-h-36 object-contain rounded-sm opacity-80"
-        />
+        <button onClick={() => setPicking(true)} title={t("pickRegion")} className="h-full">
+          <img
+            src={`data:image/png;base64,${lastFrame.imagePngB64}`}
+            alt={t("capturedScreen")}
+            className="h-full max-h-36 object-contain rounded-sm opacity-80 hover:opacity-100 cursor-zoom-in"
+          />
+        </button>
       </div>
 
       {/* Loading overlay */}
@@ -146,7 +171,7 @@ function BlockCard({
   const label = blockTypeLabel(block.blockType);
   const badgeClass = blockTypeBadgeClass(block.blockType);
   const content = tab === "output" ? block.output : block.original;
-  const isCode = "code" in block.blockType || "terminal" in block.blockType || "log" in block.blockType;
+  const isCode = ["code", "terminal", "log"].includes(blockTypeKey(block.blockType));
 
   const preview = content.length > 120 ? content.slice(0, 120) + "…" : content;
 

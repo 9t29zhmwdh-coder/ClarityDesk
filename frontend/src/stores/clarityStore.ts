@@ -22,6 +22,8 @@ interface ClarityState {
   lastResult: AnalysisResult | null;
   ollamaStatus: OllamaStatus | null;
   error: string | null;
+  /** Shortcuts the system refused at the last save. */
+  failedHotkeys: string[];
 
   // Actions
   setTab: (tab: ClarityState["activeTab"]) => void;
@@ -35,6 +37,8 @@ interface ClarityState {
   capture: () => Promise<void>;
   analyze: () => Promise<void>;
   captureAndAnalyze: () => Promise<void>;
+  analyzeRegion: (x: number, y: number, width: number, height: number) => Promise<void>;
+  showHotkeyResult: (frame: CaptureFrame, result: AnalysisResult) => void;
   clearError: () => void;
 }
 
@@ -49,16 +53,24 @@ export const useClarityStore = create<ClarityState>((set, get) => ({
   lastResult: null,
   ollamaStatus: null,
   error: null,
+  failedHotkeys: [],
 
   setTab: (tab) => set({ activeTab: tab }),
   setMode: (mode) => set({ mode }),
-  giveConsent: () => set({ consentGiven: true }),
+  giveConsent: () => {
+    set({ consentGiven: true });
+    // Asked once: the answer is kept in the settings file.
+    const settings = get().settings;
+    if (settings?.privacy.showConsentOnStart) {
+      get().saveSettings({ ...settings, privacy: { ...settings.privacy, showConsentOnStart: false } });
+    }
+  },
   clearError: () => set({ error: null }),
 
   loadSettings: async () => {
     try {
       const settings = await api.getSettings();
-      set({ settings, mode: settings.defaultMode });
+      set({ settings, mode: settings.defaultMode, consentGiven: !settings.privacy.showConsentOnStart });
     } catch (e) {
       set({ error: String(e) });
     }
@@ -66,8 +78,8 @@ export const useClarityStore = create<ClarityState>((set, get) => ({
 
   saveSettings: async (settings) => {
     try {
-      await api.saveSettings(settings);
-      set({ settings });
+      const outcome = await api.saveSettings(settings);
+      set({ settings, failedHotkeys: outcome.failedHotkeys });
     } catch (e) {
       set({ error: String(e) });
     }
@@ -107,6 +119,19 @@ export const useClarityStore = create<ClarityState>((set, get) => ({
       set({ isAnalyzing: false });
     }
   },
+
+  analyzeRegion: async (x, y, width, height) => {
+    try {
+      const lastFrame = await api.cropLastFrame(x, y, width, height);
+      set({ lastFrame, lastResult: null });
+      await get().analyze();
+    } catch (e) {
+      set({ error: String(e) });
+    }
+  },
+
+  showHotkeyResult: (lastFrame, lastResult) =>
+    set({ lastFrame, lastResult, activeTab: "analysis", error: null }),
 
   captureAndAnalyze: async () => {
     await get().capture();

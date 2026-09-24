@@ -9,6 +9,11 @@ use crate::{
 use ollama::OllamaClient;
 use prompts::{language_prompt, smart_prompt};
 
+/// About two screen pages of text per model call.
+const MAX_GROUP_CHARS: usize = 3000;
+/// Upper bound on model calls per capture, so a huge page does not keep the person waiting.
+const MAX_GROUPS: usize = 6;
+
 pub struct SemanticEngine {
     client: OllamaClient,
     analyzer: ContentAnalyzer,
@@ -22,19 +27,6 @@ impl SemanticEngine {
         }
     }
 
-    pub fn update_model(&mut self, model: impl Into<String>) {
-        self.client = OllamaClient::new(self.client_host(), model);
-    }
-
-    pub fn update_host(&mut self, host: impl Into<String>) {
-        let model = self.client.model.clone();
-        self.client = OllamaClient::new(host, model);
-    }
-
-    fn client_host(&self) -> String {
-        self.client.host.clone()
-    }
-
     pub async fn analyze(
         &self,
         frame_id: &str,
@@ -45,36 +37,26 @@ impl SemanticEngine {
         let effective_mode = if mode == AnalysisMode::Smart {
             self.analyzer.infer_mode(&blocks)
         } else {
-            mode.clone()
+            mode
         };
 
         let model = self.client.model.clone();
         let mut analyzed = Vec::new();
 
-        for block in &blocks {
-            if block.text.split_whitespace().count() < 3 {
-                continue;
-            }
-
+        for group in self.analyzer.merge_for_prompts(&blocks, &effective_mode, MAX_GROUP_CHARS, MAX_GROUPS) {
             let prompt = match &effective_mode {
-                AnalysisMode::Language => {
-                    language_prompt(&block.text, target_language)
-                }
-                AnalysisMode::Dev => {
-                    smart_prompt(&block.text, &block.block_type, target_language)
-                }
-                AnalysisMode::Smart => {
-                    smart_prompt(&block.text, &block.block_type, target_language)
+                AnalysisMode::Language => language_prompt(&group.text, target_language),
+                AnalysisMode::Dev | AnalysisMode::Smart => {
+                    smart_prompt(&group.text, &group.block_type, target_language)
                 }
             };
-
             let result = self.client.generate(&prompt).await;
             analyzed.push(AnalyzedBlock {
-                block_id: block.id.clone(),
-                original: block.text.clone(),
-                output: result.unwrap_or_else(|e| format!("[Error: {e}]")),
-                block_type: block.block_type.clone(),
-                error: None,
+                block_id: group.id.clone(),
+                original: group.text.clone(),
+                output: result.as_ref().map(String::clone).unwrap_or_default(),
+                block_type: group.block_type.clone(),
+                error: result.err().map(|e| e.to_string()),
             });
         }
 
