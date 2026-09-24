@@ -1,11 +1,5 @@
 {
   "app": "Terminal",
-  "matchProcessNames": ["Terminal", "iTerm2", "kitty", "alacritty", "wezterm"],
-  "mode": "dev",
-  "rules": {
-    "detectCode": false,
-    "explainErrors": true,
-    "preferredModel": null,
-    "language": null
-  }
+  "matchProcessNames": ["Terminal", "iTerm2", "kitty", "Alacritty", "WezTerm", "Warp", "Ghostty", "Windows Terminal", "PowerShell"],
+  "mode": "dev"
 }

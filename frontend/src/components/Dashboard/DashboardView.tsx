@@ -23,8 +23,8 @@ export function DashboardView() {
     ollamaStatus,
     lastFrame, lastResult,
     consentGiven, giveConsent,
+    settings,
     checkOllama, captureAndAnalyze,
-    error, clearError,
   } = useClarityStore();
   const t = useT();
 
@@ -89,6 +89,11 @@ export function DashboardView() {
             </div>
           )}
         </div>
+        {ollamaStatus?.connected && !ollamaStatus.modelInstalled && (
+          <p className="text-xs text-warning mt-2">
+            {t("modelMissingPrefix")} <code className="text-slate-300">ollama pull {ollamaStatus.model}</code>
+          </p>
+        )}
         {ollamaStatus?.connected && (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {ollamaStatus.availableModels.slice(0, 6).map((m) => (
@@ -156,14 +161,18 @@ export function DashboardView() {
 
       {/* Hotkeys */}
       <div className="card">
-        <p className="label mb-2">{t("hotkeysLabel")}</p>
+        <p className="label mb-1">{t("hotkeysLabel")}</p>
+        <p className="text-xs text-muted mb-2">{t("hotkeysIntro")}</p>
         <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
-          {[
-            ["Alt+Shift+C", t("hkCapture")],
-            ["Alt+Shift+D", t("hkDev")],
-            ["Alt+Shift+S", t("hkSmart")],
-            ["Alt+Shift+E", t("hkReanalyze")],
-          ].map(([key, desc]) => (
+          {(settings
+            ? [
+                [settings.hotkeys.startStop, t("hkCapture")],
+                [settings.hotkeys.devMode, t("hkDev")],
+                [settings.hotkeys.smartMode, t("hkSmart")],
+                [settings.hotkeys.reAnalyze, t("hkReanalyze")],
+              ]
+            : []
+          ).map(([key, desc]) => (
             <div key={key} className="flex items-center gap-2">
               <kbd className="px-1.5 py-0.5 rounded-sm bg-surface-3 text-slate-300 font-mono text-[10px]">
                 {key}
@@ -192,18 +201,6 @@ export function DashboardView() {
         </div>
       )}
 
-      {/* Error */}
-      {error && (
-        <div className="flex items-start gap-2 p-3 rounded-lg bg-danger/10 border border-danger/20">
-          <AlertCircle size={14} className="text-danger mt-0.5 shrink-0" />
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-danger">{error}</p>
-          </div>
-          <button onClick={clearError} className="text-danger/60 hover:text-danger text-xs">
-            ✕
-          </button>
-        </div>
-      )}
     </div>
   );
 }

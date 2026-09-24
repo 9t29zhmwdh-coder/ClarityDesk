@@ -19,9 +19,7 @@ tauri-build = { version = "2", features = [] }
 cd-core = { path = "../crates/cd-core" }
 
 tauri                     = { version = "2", features = ["tray-icon"] }
-tauri-plugin-fs           = "2"
 tauri-plugin-global-shortcut = "2"
-tauri-plugin-notification = "2"
 
 serde.workspace      = true
 serde_json.workspace = true
@@ -30,8 +28,3 @@ anyhow.workspace     = true
 tracing.workspace    = true
 tracing-subscriber.workspace = true
 thiserror.workspace  = true
-
-[profile.release]
-opt-level = 3
-lto       = true
-strip     = true

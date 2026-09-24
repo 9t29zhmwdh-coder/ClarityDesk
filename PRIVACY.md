@@ -2,52 +2,44 @@
 
 ## Summary
 
-ClarityDesk processes all data locally and discards it immediately after display.
-No data ever leaves your device.
+ClarityDesk reads text on your screen and explains it with a local AI model. Captures and results stay in memory; only the settings are saved.
 
 ## What I Collect
 
-**Nothing.** ClarityDesk does not collect, store, transmit, or share any user data.
+**Nothing.** ClarityDesk sends nothing to me or to anyone else. There is no telemetry.
 
 ## Screen Content
 
-- Captures are taken only on explicit user action (hotkey or button press)
-- Captured frames are held in RAM and discarded immediately after the result is shown
-- No screenshots are written to disk at any point during normal operation
-- No screenshots are transmitted over any network connection
+- A capture happens only when you press the capture button or one of the hotkeys.
+- The latest capture and its result stay in memory, so you can pick a region or analyze again, and are replaced by the next capture or discarded when ClarityDesk closes.
+- No capture is written to disk: Tesseract reads the image through a pipe.
+- The capture button hides ClarityDesk first, so its own window is not in the picture; a hotkey captures the window in front of it.
 
 ## AI Processing
 
-- All AI analysis runs locally via [Ollama](https://ollama.ai) at `localhost:11434`
-- No content is sent to any external AI service (OpenAI, Anthropic, Google, etc.)
+- The text found on screen is sent to the Ollama address in the settings, `http://localhost:11434` unless you change it. With the default, nothing leaves the computer.
+- No external AI service (OpenAI, Anthropic, Google, and so on) is contacted.
 
 ## OCR Processing
 
-- All text extraction runs locally via [Tesseract OCR](https://tesseract-ocr.github.io/)
-- No OCR results are transmitted externally
+- Text extraction runs locally via [Tesseract OCR](https://tesseract-ocr.github.io/).
 
-## Settings & App Profiles
+## Settings and App Profiles
 
-- Settings are stored in the OS application data directory
-  (`~/Library/Application Support/ch.raystudio.claritydesk/` on macOS)
-- Settings contain no personal information (model names, hotkeys, language preferences only)
-- No settings are synced to any cloud service
+- Settings are saved in the application data folder (`~/Library/Application Support/ch.raystudio.claritydesk/` on macOS): Ollama address and model, OCR and target language, default mode, hotkeys, and whether consent was given.
+- Your own app profiles, if you add any, sit in its `profiles` folder. They only name apps and a mode.
+- Nothing is synced anywhere.
 
-## First-Use Consent
+## Consent
 
-A consent dialog is shown on first launch explaining screen recording permission requirements.
-ClarityDesk does not activate screen recording without explicit user acknowledgement.
-
-## App Whitelist
-
-Users can configure an allowlist restricting which applications ClarityDesk may analyze.
+The capture button asks for consent once and remembers the answer. On macOS the system additionally asks for the Screen Recording permission, which you can withdraw in System Settings at any time.
 
 ## Data Retention
 
-Zero. ClarityDesk retains no data between sessions.
+Captures and results: until the next capture or until ClarityDesk closes. Settings: until you delete them (see the README, Uninstall).
 
 ## Contact
 
 Security issues: see [SECURITY.md](SECURITY.md)
 
-**Last updated: 2026-06-14**
+**Last updated: 2026-09-24**

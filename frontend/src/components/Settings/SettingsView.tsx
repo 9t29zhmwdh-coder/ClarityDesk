@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { Save, RotateCcw, CheckCircle } from "lucide-react";
 import { useClarityStore } from "../../stores/clarityStore";
-import { Settings } from "../../lib/tauri";
+import { Settings, api } from "../../lib/tauri";
 import { useT } from "../../lib/i18n";
 import clsx from "clsx";
 
 export function SettingsView() {
-  const { settings, loadSettings, saveSettings, ollamaStatus } = useClarityStore();
+  const { settings, loadSettings, saveSettings, ollamaStatus, failedHotkeys } = useClarityStore();
   const [form, setForm] = useState<Settings | null>(null);
+  const [profilesDir, setProfilesDir] = useState("");
   const [saved, setSaved] = useState(false);
   const t = useT();
 
   useEffect(() => {
     if (!settings) loadSettings();
+    api.getProfilesDir().then(setProfilesDir).catch(() => setProfilesDir(""));
   }, []);
 
   useEffect(() => {
@@ -175,6 +177,23 @@ export function SettingsView() {
               </div>
             ))}
           </div>
+          <p className="text-xs text-muted mt-2">{t("hotkeySyntaxHint")}</p>
+          {failedHotkeys.length > 0 && (
+            <p className="text-xs text-warning mt-2">
+              {t("hotkeysFailed")} <span className="font-mono">{failedHotkeys.join(", ")}</span>
+            </p>
+          )}
+        </section>
+
+        {/* App profiles */}
+        <section>
+          <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("profilesSection")}</h3>
+          <p className="text-xs text-muted">{t("profilesIntro")}</p>
+          {profilesDir && (
+            <p className="text-xs text-muted mt-2">
+              {t("profilesOwn")} <code className="text-slate-300 break-all">{profilesDir}</code>
+            </p>
+          )}
         </section>
 
         {/* Privacy */}
@@ -182,11 +201,7 @@ export function SettingsView() {
           <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">{t("privacySection")}</h3>
           <div className="space-y-3">
             {(
-              [
-                ["storeCaptures", t("privStoreCaptures")],
-                ["storeResults",  t("privStoreResults")],
-                ["showConsentOnStart", t("privShowConsent")],
-              ] as const
+              [["showConsentOnStart", t("privShowConsent")]] as const
             ).map(([key, label]) => (
               <label key={key} className="flex items-center gap-3 cursor-pointer">
                 <input

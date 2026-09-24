@@ -9,44 +9,45 @@ pub fn language_prompt(text: &str, target_lang: &str) -> String {
     )
 }
 
-pub fn code_explain_prompt(code: &str, lang_hint: Option<&str>) -> String {
+pub fn code_explain_prompt(code: &str, lang_hint: Option<&str>, answer_lang: &str) -> String {
     let lang_str = lang_hint.map(|l| format!(" ({l})")).unwrap_or_default();
     format!(
         "Explain this code{lang_str} concisely:\n\
         1. Purpose: what does it do?\n\
         2. How it works: key logic\n\
         3. Potential issues or improvements\n\n\
-        Keep the answer brief and developer-focused.\n\n\
+        Keep the answer brief and developer-focused. Answer in {answer_lang}.\n\n\
         Code:\n```\n{code}\n```"
     )
 }
 
-pub fn terminal_prompt(output: &str) -> String {
+pub fn terminal_prompt(output: &str, answer_lang: &str) -> String {
     format!(
         "Analyze this terminal output:\n\
         1. What happened?\n\
         2. Is there an error? If so, what caused it?\n\
         3. Recommended next steps.\n\n\
-        Be concise and actionable.\n\n\
+        Be concise and actionable. Answer in {answer_lang}.\n\n\
         Output:\n{output}"
     )
 }
 
-pub fn log_prompt(log: &str) -> String {
+pub fn log_prompt(log: &str, answer_lang: &str) -> String {
     format!(
         "Analyze these log entries:\n\
         1. Summary of events\n\
         2. Errors or warnings: what do they indicate?\n\
         3. Suggested fix or investigation path\n\n\
+        Answer in {answer_lang}.\n\n\
         Output:\n{log}"
     )
 }
 
 pub fn smart_prompt(text: &str, block_type: &BlockType, target_lang: &str) -> String {
     match block_type {
-        BlockType::Code { lang_hint } => code_explain_prompt(text, lang_hint.as_deref()),
-        BlockType::Terminal           => terminal_prompt(text),
-        BlockType::Log                => log_prompt(text),
+        BlockType::Code { lang_hint } => code_explain_prompt(text, lang_hint.as_deref(), target_lang),
+        BlockType::Terminal           => terminal_prompt(text, target_lang),
+        BlockType::Log                => log_prompt(text, target_lang),
         _                             => language_prompt(text, target_lang),
     }
 }

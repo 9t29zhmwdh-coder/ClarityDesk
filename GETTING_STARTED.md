@@ -28,8 +28,8 @@ If any command prints something like `'rustc' is not recognized as an internal o
 - **Tauri CLI missing** → once Rust is installed, run `cargo install tauri-cli`
 
 You'll also need:
-- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull llama3.2`
-- **Tesseract OCR** → follow the [Windows install instructions](https://tesseract-ocr.github.io/tessdoc/Installation.html)
+- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull qwen3.5:4b` (on a Mac: `ollama pull qwen3.5:4b-mlx`)
+- **Tesseract OCR** → follow the [Windows install instructions](https://tesseract-ocr.github.io/tessdoc/Installation.html); in the installer, tick the languages you read (for German: *German*). ClarityDesk finds it in `C:\Program Files\Tesseract-OCR` even if it is not on PATH.
 
 Close and reopen your terminal after installing so new PATH entries take effect.
 
@@ -83,8 +83,8 @@ If you see `command not found` for any of these:
 - **Tauri CLI missing** → once Rust is installed, run `cargo install tauri-cli`
 
 You'll also need:
-- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull llama3.2`
-- **Tesseract OCR** → install via your package manager, e.g. `sudo apt install tesseract-ocr` on Debian/Ubuntu, or see the [official install docs](https://tesseract-ocr.github.io/tessdoc/Installation.html)
+- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull qwen3.5:4b` (on a Mac: `ollama pull qwen3.5:4b-mlx`)
+- **Tesseract OCR** → install via your package manager, e.g. `sudo apt install tesseract-ocr tesseract-ocr-deu` on Debian/Ubuntu (the second package adds German), or see the [official install docs](https://tesseract-ocr.github.io/tessdoc/Installation.html)
 
 Restart your terminal (or run `source ~/.bashrc`) after installing Rust so `cargo` is on your PATH.
 
@@ -136,8 +136,8 @@ If any command says `command not found`:
 - **Tauri CLI missing** → once Rust is installed, run `cargo install tauri-cli`
 
 You'll also need:
-- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull llama3.2`
-- **Tesseract OCR** → `brew install tesseract` (requires [Homebrew](https://brew.sh))
+- **Ollama** → install from [ollama.ai](https://ollama.ai), then pull a model: `ollama pull qwen3.5:4b` (on a Mac: `ollama pull qwen3.5:4b-mlx`)
+- **Tesseract OCR** → `brew install tesseract tesseract-lang` (requires [Homebrew](https://brew.sh)); plain `tesseract` has English only
 
 ### 3. Get the code
 
@@ -191,5 +191,6 @@ cargo run -p cd-cli -- status
 | PowerShell says a `.ps1` script "cannot be loaded because running scripts is disabled" | Windows execution policy blocks local scripts | Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` in an elevated PowerShell, then retry |
 | Build fails with linker errors mentioning `link.exe` or MSVC (Windows) | Missing C++ build tools required by Rust on Windows | Install "Desktop development with C++" via the [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) installer |
 | `error: failed to run custom build command for glib-sys` or missing `webkit2gtk` (Linux) | Tauri needs WebKitGTK and related system libraries | Install them, e.g. on Debian/Ubuntu: `sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev` |
-| App shows "Ollama not reachable" / CLI `status` command fails | Ollama isn't installed, running, or has no model pulled | Install from [ollama.ai](https://ollama.ai), start it, then run `ollama pull llama3.2` |
-| OCR returns empty text / "Tesseract not found" | Tesseract OCR isn't installed or not on PATH | Install via the [official docs](https://tesseract-ocr.github.io/tessdoc/Installation.html) (`brew install tesseract` on macOS, `apt install tesseract-ocr` on Debian/Ubuntu) |
+| App shows "Ollama not reachable" / CLI `status` command fails | Ollama isn't installed, running, or has no model pulled | Install from [ollama.ai](https://ollama.ai), start it, then run `ollama pull qwen3.5:4b-mlx` (Mac) or `ollama pull qwen3.5:4b`. The dashboard names the missing model |
+| "Tesseract is not installed" or "none of the OCR languages is installed" | Tesseract or its language data is missing | Install via the [official docs](https://tesseract-ocr.github.io/tessdoc/Installation.html) (`brew install tesseract tesseract-lang` on macOS, `apt install tesseract-ocr tesseract-ocr-deu` on Debian/Ubuntu) |
+| A hotkey does nothing | Another app already uses it, or macOS has not granted Screen Recording | Settings shows which shortcuts could not be registered; grant ClarityDesk Screen Recording in System Settings, Privacy & Security, then restart it |

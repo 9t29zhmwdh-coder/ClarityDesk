@@ -2,6 +2,47 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.0] - 2026-09-24
+
+A review found that ClarityDesk could not do what its README promised. This release makes it work and trims the README to what was tested.
+
+### Fixed
+
+- OCR never found any text with Tesseract 5 (released 2021): the parser expected single quotes where Tesseract writes double ones, so every capture came back empty. It now reads both, keeps line breaks instead of gluing a paragraph into one line, and decodes `&lt;`, `&gt;` and `&amp;`. Tested against real Tesseract 5.5 output kept in `crates/cd-core/tests/fixtures`.
+- The capture button photographed ClarityDesk itself. The window now hides, the screen is captured, and the window comes back.
+- An app started from Finder did not find Tesseract, because macOS gives it a PATH without Homebrew. The usual install locations on macOS and Windows are searched.
+- With Homebrew's `tesseract` (English only) the default `eng+deu` made Tesseract fail and the app showed an empty result without a word. Missing languages are now dropped with a warning, and if none is left the error says to install `tesseract-lang`. OCR errors are shown instead of being swallowed.
+- Settings were kept in memory only and lost on every restart. They are saved now, and the consent is asked once.
+- After a failed analysis, every later one was refused with "Analysis already running" until the app was restarted.
+- Every OCR paragraph went to the model on its own, one after the other, so a full screen took minutes and a compiler error was explained piece by piece. Blocks are merged into at most six prompts; in Dev mode the whole screen is one story. A real run on a Rust compiler error: one correct answer in about 5 seconds.
+- Explanations always came in English; they now come in the target language.
+- The release profile sat in `src-tauri/Cargo.toml`, where cargo ignores it, so releases were never built optimized. It now applies from the workspace root, without stripping build-time libraries.
+- The dashboard showed fixed hotkeys instead of the configured ones, the interface ignored the system language, and `frontend/package.json` still said 1.0.8.
+
+### Added
+
+- System-wide hotkeys that work: capture the window in front, from any app, analyze it and bring ClarityDesk forward with the result. The settings show which shortcuts the system refused.
+- Region: drag a rectangle over a capture to read only that part.
+- App profiles that are read: browsers translate, terminals and code editors explain, and JSON files in the `profiles` folder add or override apps.
+- `claritydesk image <file>` in the CLI to explain a screenshot you already have.
+- The dashboard says when the configured model is not installed and how to pull it.
+
+### Changed
+
+- Default model `qwen3.5:4b-mlx` on a Mac and `qwen3.5:4b` elsewhere, the model LifeSort measured, instead of `llama3.2`. Requests set a fixed 8k context (4.5 GB instead of the model's full window), turn off thinking and use a low temperature.
+- Screen capture moved from the unmaintained `screenshots` crate to `xcap`, which also captures single windows.
+- Tesseract reads the image from a pipe; no capture is written to disk any more.
+- The page gets only `core:default` permissions and a Content Security Policy; the unused `fs` and `notification` plugins are gone.
+- Default target language English; the CLI defaults match the app.
+
+### Removed
+
+- Settings that did nothing: store captures, store results, app whitelist, capture scale, include cursor.
+- `config/model-config.toml`, which nothing read, and the scaffolding files `SKELETON.md`, `TEMPLATE_NOTES.md`, `docs/scan-report.json`.
+- README and privacy claims for features that did not exist.
+
+---
+
 ## [1.2.2] - 2026-08-27
 
 ### Changed

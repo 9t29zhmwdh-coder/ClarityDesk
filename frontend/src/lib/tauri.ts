@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -19,7 +20,7 @@ export interface BoundingBox {
 
 export type CaptureSource =
   | { fullScreen: { index: number } }
-  | { activeWindow: null }
+  | { activeWindow: { app: string } }
   | { region: { x: number; y: number; width: number; height: number } };
 
 export interface CaptureFrame {
@@ -79,15 +80,10 @@ export interface HotkeyConfig {
 }
 
 export interface PrivacyConfig {
-  storeCaptures: boolean;
-  storeResults: boolean;
-  appWhitelist: string[];
   showConsentOnStart: boolean;
 }
 
 export interface CaptureSettings {
-  scaleFactor: number;
-  includeCursor: boolean;
   delayMs: number;
 }
 
@@ -104,9 +100,29 @@ export interface Settings {
 
 export interface OllamaStatus {
   connected: boolean;
+  modelInstalled: boolean;
+  model: string;
   version: string | null;
   availableModels: string[];
   host: string;
+}
+
+export interface SaveOutcome {
+  failedHotkeys: string[];
+}
+
+export interface HotkeyResult {
+  frame: CaptureFrame;
+  result: AnalysisResult;
+}
+
+/** Results and errors of the system-wide shortcuts, which run in Rust. */
+export function onHotkeyResult(handler: (payload: HotkeyResult) => void): Promise<UnlistenFn> {
+  return listen<HotkeyResult>("claritydesk://result", (event) => handler(event.payload));
+}
+
+export function onHotkeyError(handler: (message: string) => void): Promise<UnlistenFn> {
+  return listen<string>("claritydesk://error", (event) => handler(event.payload));
 }
 
 // ── API ──────────────────────────────────────────────────────────────────────
@@ -115,26 +131,21 @@ export const api = {
   // Capture
   listScreens: (): Promise<ScreenInfo[]> => invoke("list_screens"),
   capturePrimary: (): Promise<CaptureFrame> => invoke("capture_primary"),
-  captureScreen: (index: number): Promise<CaptureFrame> => invoke("capture_screen", { index }),
-  captureRegion: (x: number, y: number, width: number, height: number): Promise<CaptureFrame> =>
-    invoke("capture_region", { x, y, width, height }),
+  cropLastFrame: (x: number, y: number, width: number, height: number): Promise<CaptureFrame> =>
+    invoke("crop_last_frame", { x, y, width, height }),
   getLastFrame: (): Promise<CaptureFrame | null> => invoke("get_last_frame"),
 
   // Analysis
   analyzeLastFrame: (mode: AnalysisMode): Promise<AnalysisResult> =>
     invoke("analyze_last_frame", { mode }),
-  analyzeBlocks: (
-    frameId: string,
-    blocks: TextBlock[],
-    mode: AnalysisMode,
-  ): Promise<AnalysisResult> => invoke("analyze_blocks", { frameId, blocks, mode }),
   extractText: (pngB64: string): Promise<TextBlock[]> => invoke("extract_text", { pngB64 }),
   getLastResult: (): Promise<AnalysisResult | null> => invoke("get_last_result"),
   isAnalyzing: (): Promise<boolean> => invoke("is_analyzing"),
 
   // Settings
   getSettings: (): Promise<Settings> => invoke("get_settings"),
-  saveSettings: (settings: Settings): Promise<void> => invoke("save_settings", { settings }),
+  saveSettings: (settings: Settings): Promise<SaveOutcome> => invoke("save_settings", { settings }),
+  getProfilesDir: (): Promise<string> => invoke("get_profiles_dir"),
   checkOllama: (): Promise<OllamaStatus> => invoke("check_ollama"),
   getDefaultSettings: (): Promise<Settings> => invoke("get_default_settings"),
 };

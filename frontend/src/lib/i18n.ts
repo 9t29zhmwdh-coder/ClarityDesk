@@ -4,7 +4,12 @@ export type Lang = 'en' | 'de'
 
 const STORAGE_KEY = 'claritydesk_lang'
 
-let currentLang: Lang = (localStorage.getItem(STORAGE_KEY) as Lang) || 'en'
+// A choice made with the language toggle wins; otherwise the system language decides.
+function systemLang(): Lang {
+  return navigator.language.toLowerCase().startsWith('de') ? 'de' : 'en'
+}
+
+let currentLang: Lang = (localStorage.getItem(STORAGE_KEY) as Lang) || systemLang()
 
 export function getLang(): Lang {
   return currentLang
@@ -73,10 +78,21 @@ const translations = {
     ocrHintPrefix: 'Tesseract language codes separated by', ocrHintExample: 'Example:',
     hkStartStop: 'Start / Stop', hkReanalyzeLabel: 'Re-Analyze',
     privacySection: 'Privacy',
-    privStoreCaptures: 'Store captured images on disk',
-    privStoreResults: 'Store analysis results on disk',
     privShowConsent: 'Show consent dialog on startup',
-    privacyNote: 'ClarityDesk processes everything locally. No data leaves your device. Tesseract and Ollama run entirely offline.',
+    privacyNote: 'Captures and results stay in memory and are gone when ClarityDesk closes; only these settings are saved. Text is sent to the Ollama address above, which is this computer unless you change it.',
+    regionHint: 'Drag a rectangle over the part you want read, then analyze it.',
+    analyzeRegion: 'Analyze region',
+    cancel: 'Cancel',
+    pickRegion: 'Pick region',
+    capturedScreen: 'Captured screen',
+    dismiss: 'Dismiss',
+    hotkeysIntro: 'They work in any app: the window in front is captured and explained, and ClarityDesk comes forward with the result.',
+    modelMissingPrefix: 'The configured model is not installed. Run',
+    hotkeySyntaxHint: 'Format: modifiers and a key joined by +, for example Alt+Shift+C or CommandOrControl+Shift+X.',
+    hotkeysFailed: 'Not available, invalid or taken by another app:',
+    profilesSection: 'App profiles',
+    profilesIntro: 'A hotkey capture picks its mode from the app in front: browsers translate, terminals and code editors explain. The mode chosen on the dashboard applies to the capture button.',
+    profilesOwn: 'Own profiles (JSON with app, matchProcessNames and mode) go into:',
   },
   de: {
     navDashboard: 'Übersicht', navAnalysis: 'Analyse', navSettings: 'Einstellungen',
@@ -119,10 +135,21 @@ const translations = {
     ocrHintPrefix: 'Tesseract-Sprachcodes getrennt durch', ocrHintExample: 'Beispiel:',
     hkStartStop: 'Start / Stopp', hkReanalyzeLabel: 'Neu analysieren',
     privacySection: 'Datenschutz',
-    privStoreCaptures: 'Erfasste Bilder auf der Festplatte speichern',
-    privStoreResults: 'Analyseergebnisse auf der Festplatte speichern',
     privShowConsent: 'Zustimmungsdialog beim Start anzeigen',
-    privacyNote: 'ClarityDesk verarbeitet alles lokal. Es verlassen keine Daten dein Gerät. Tesseract und Ollama laufen vollständig offline.',
+    privacyNote: 'Aufnahmen und Ergebnisse bleiben im Arbeitsspeicher und sind weg, sobald ClarityDesk schliesst; gespeichert werden nur diese Einstellungen. Text geht an die Ollama-Adresse oben, also an diesen Rechner, solange du sie nicht änderst.',
+    regionHint: 'Zieh einen Rahmen über den Teil, der gelesen werden soll, dann analysieren.',
+    analyzeRegion: 'Bereich analysieren',
+    cancel: 'Abbrechen',
+    pickRegion: 'Bereich wählen',
+    capturedScreen: 'Erfasster Bildschirm',
+    dismiss: 'Schliessen',
+    hotkeysIntro: 'Sie funktionieren in jeder App: Das vorderste Fenster wird erfasst und erklärt, und ClarityDesk kommt mit dem Ergebnis nach vorne.',
+    modelMissingPrefix: 'Das eingestellte Modell ist nicht installiert. Ausführen:',
+    hotkeySyntaxHint: 'Format: Zusatztasten und eine Taste mit + verbunden, zum Beispiel Alt+Shift+C oder CommandOrControl+Shift+X.',
+    hotkeysFailed: 'Nicht verfügbar, ungültig oder von einer anderen App belegt:',
+    profilesSection: 'App-Profile',
+    profilesIntro: 'Eine Hotkey-Aufnahme wählt ihren Modus nach der App im Vordergrund: Browser übersetzen, Terminals und Code-Editoren erklären. Für den Aufnahme-Knopf gilt der Modus aus der Übersicht.',
+    profilesOwn: 'Eigene Profile (JSON mit app, matchProcessNames und mode) gehören in:',
   },
 } as const
 

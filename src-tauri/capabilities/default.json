@@ -1,20 +1,11 @@
 {
   "$schema": "https://schema.tauri.app/capabilities/2",
   "identifier": "default",
-  "description": "ClarityDesk default capabilities",
-  "windows": ["main"],
+  "description": "ClarityDesk default capabilities. The page only calls the app's own commands; files and shortcuts are handled in Rust.",
+  "windows": [
+    "main"
+  ],
   "permissions": [
-    "core:default",
-    "fs:allow-read-text-file",
-    "fs:allow-write-text-file",
-    "fs:allow-exists",
-    "fs:allow-create",
-    "fs:allow-remove",
-    "global-shortcut:allow-register",
-    "global-shortcut:allow-unregister",
-    "global-shortcut:allow-is-registered",
-    "notification:allow-notify",
-    "notification:allow-request-permission",
-    "notification:allow-check-permissions"
+    "core:default"
   ]
 }
