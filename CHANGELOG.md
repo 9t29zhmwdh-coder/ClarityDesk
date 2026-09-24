@@ -17,6 +17,9 @@ A review found that ClarityDesk could not do what its README promised. This rele
 - Every OCR paragraph went to the model on its own, one after the other, so a full screen took minutes and a compiler error was explained piece by piece. Blocks are merged into at most six prompts; in Dev mode the whole screen is one story. A real run on a Rust compiler error: one correct answer in about 5 seconds.
 - Explanations always came in English; they now come in the target language.
 - The release profile sat in `src-tauri/Cargo.toml`, where cargo ignores it, so releases were never built optimized. It now applies from the workspace root, without stripping build-time libraries.
+- The macOS app could never be granted Screen Recording. The bundle was only linker-signed, under a random identity (`claritydesk_app-<hash>`) instead of `ch.raystudio.claritydesk`, so the switch in System Settings never applied to the running app; the published 1.2.2 DMG has the same defect. The bundle is now ad-hoc signed as a whole (`signingIdentity: "-"`), under its bundle id and with its resources sealed.
+- Without the permission macOS returns a blank picture, which showed as "no text found". ClarityDesk now asks macOS first, which also lists it in System Settings, and reports the missing permission; an all-one-colour capture is reported the same way.
+- The analysis view crashed to an empty window as soon as a result had a block: the page tested `"code" in blockType`, but simple block types arrive as a string (`"terminal"`). This was never noticed because OCR had never returned a block. One or two answers now open right away.
 - The dashboard showed fixed hotkeys instead of the configured ones, the interface ignored the system language, and `frontend/package.json` still said 1.0.8.
 
 ### Added

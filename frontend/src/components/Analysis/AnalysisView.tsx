@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RefreshCw, Copy, ChevronDown, ChevronRight, Loader2, ImageOff, Crop } from "lucide-react";
 import { RegionPicker } from "./RegionPicker";
 import clsx from "clsx";
 import { useClarityStore } from "../../stores/clarityStore";
-import { AnalyzedBlock, blockTypeBadgeClass, blockTypeLabel } from "../../lib/tauri";
+import { AnalyzedBlock, blockTypeBadgeClass, blockTypeKey, blockTypeLabel } from "../../lib/tauri";
 import { useT } from "../../lib/i18n";
 
 export function AnalysisView() {
   const { lastFrame, lastResult, isAnalyzing, analyze, analyzeRegion } = useClarityStore();
   const [picking, setPicking] = useState(false);
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set());
+  // One or two answers are opened right away; hiding the only result behind a click helps nobody.
+  useEffect(() => {
+    const blocks = lastResult?.blocks ?? [];
+    setExpandedBlocks(new Set(blocks.length <= 2 ? blocks.map((b) => b.blockId) : []));
+  }, [lastResult]);
   const [tab, setTab] = useState<"original" | "output">("output");
   const [copied, setCopied] = useState<string | null>(null);
   const t = useT();
@@ -166,7 +171,7 @@ function BlockCard({
   const label = blockTypeLabel(block.blockType);
   const badgeClass = blockTypeBadgeClass(block.blockType);
   const content = tab === "output" ? block.output : block.original;
-  const isCode = "code" in block.blockType || "terminal" in block.blockType || "log" in block.blockType;
+  const isCode = ["code", "terminal", "log"].includes(blockTypeKey(block.blockType));
 
   const preview = content.length > 120 ? content.slice(0, 120) + "…" : content;
 

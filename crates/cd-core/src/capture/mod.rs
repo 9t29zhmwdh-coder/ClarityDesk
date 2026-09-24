@@ -14,6 +14,44 @@ fn capture_error(error: impl std::fmt::Display) -> CdError {
     CdError::Capture(error.to_string())
 }
 
+const PERMISSION_MISSING: &str = "Screen Recording is not allowed for ClarityDesk. Turn it on in System Settings, Privacy & Security, Screen & System Audio Recording, then restart ClarityDesk.";
+
+#[cfg(target_os = "macos")]
+#[link(name = "CoreGraphics", kind = "framework")]
+extern "C" {
+    fn CGPreflightScreenCaptureAccess() -> bool;
+    fn CGRequestScreenCaptureAccess() -> bool;
+}
+
+/// Without the Screen Recording permission macOS does not refuse a capture, it
+/// returns a blank picture, which read as "no text found". Asking first also puts
+/// ClarityDesk into the list in System Settings.
+#[cfg(target_os = "macos")]
+fn ensure_permission() -> Result<()> {
+    // SAFETY: both functions take no arguments and only query or request the permission.
+    let allowed = unsafe { CGPreflightScreenCaptureAccess() || CGRequestScreenCaptureAccess() };
+    if allowed {
+        Ok(())
+    } else {
+        Err(CdError::Capture(PERMISSION_MISSING.into()))
+    }
+}
+
+#[cfg(not(target_os = "macos"))]
+fn ensure_permission() -> Result<()> {
+    Ok(())
+}
+
+/// A capture where every pixel has the same colour is what a denied permission
+/// produces on some systems; it is never a real screen.
+fn reject_blank(rgba: &[u8]) -> Result<()> {
+    let first = rgba.get(..4).unwrap_or(&[]);
+    if rgba.chunks_exact(4).all(|px| px == first) {
+        return Err(CdError::Capture(PERMISSION_MISSING.into()));
+    }
+    Ok(())
+}
+
 /// xcap and this crate may link different `image` versions, so pixels cross over as raw bytes.
 fn to_png(width: u32, height: u32, rgba: Vec<u8>) -> Result<Vec<u8>> {
     let mut png = Vec::new();
@@ -24,6 +62,9 @@ fn to_png(width: u32, height: u32, rgba: Vec<u8>) -> Result<Vec<u8>> {
 }
 
 fn frame_from(width: u32, height: u32, rgba: Vec<u8>, source: CaptureSource) -> Result<CaptureFrame> {
+    if !matches!(source, CaptureSource::Region { .. }) {
+        reject_blank(&rgba)?;
+    }
     let png = to_png(width, height, rgba)?;
     Ok(CaptureFrame::new(png, width, height, source))
 }
@@ -44,6 +85,7 @@ pub fn list_screens() -> Result<Vec<ScreenInfo>> {
 }
 
 pub fn capture_screen(index: usize) -> Result<CaptureFrame> {
+    ensure_permission()?;
     let monitor = Monitor::all()
         .map_err(capture_error)?
         .into_iter()
@@ -66,6 +108,7 @@ pub fn capture_primary() -> Result<CaptureFrame> {
 /// The front window of whatever app has focus, together with that app's name,
 /// which picks the app profile. `exclude_pid` keeps ClarityDesk from capturing itself.
 pub fn capture_active_window(exclude_pid: u32) -> Result<(CaptureFrame, String)> {
+    ensure_permission()?;
     let window = Window::all()
         .map_err(capture_error)?
         .into_iter()
@@ -117,8 +160,16 @@ mod tests {
     use super::*;
 
     fn frame(w: u32, h: u32) -> CaptureFrame {
-        let pixels = vec![200u8; (w * h * 4) as usize];
+        let mut pixels = vec![200u8; (w * h * 4) as usize];
+        pixels[0] = 10; // not blank
         frame_from(w, h, pixels, CaptureSource::FullScreen { index: 0 }).unwrap()
+    }
+
+    #[test]
+    fn a_blank_capture_is_reported_as_missing_permission() {
+        let blank = vec![40u8; 64 * 64 * 4];
+        let error = frame_from(64, 64, blank, CaptureSource::FullScreen { index: 0 }).unwrap_err();
+        assert!(error.to_string().contains("Screen Recording"));
     }
 
     #[test]

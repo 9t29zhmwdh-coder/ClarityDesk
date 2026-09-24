@@ -19,6 +19,7 @@ Several items were ticked here long before they worked. 1.3.0 made them real:
 - [ ] Session history panel (cleared on close, never persisted)
 - [ ] Tray icon with quick-capture shortcut
 - [ ] Choosing which screen the button captures on multi-monitor setups
+- [ ] Render the model's Markdown (bold, lists, code blocks) instead of showing it as plain text
 - [ ] Measuring OCR plus model quality on a fixed set of screenshots, like LifeSort does
 
 ## v0.3.0, Language & Model Expansion

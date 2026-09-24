@@ -32,15 +32,22 @@ export interface CaptureFrame {
   source: CaptureSource;
 }
 
+// serde's default enum form: unit variants arrive as a plain string ("terminal"),
+// the one variant with data as an object ({"code": {"lang_hint": "rust"}}).
 export type BlockType =
-  | { code: { langHint: string | null } }
-  | { terminal: null }
-  | { log: null }
-  | { paragraph: null }
-  | { header: null }
-  | { table: null }
-  | { ui: null }
-  | { unknown: null };
+  | { code: { lang_hint: string | null } }
+  | "terminal"
+  | "log"
+  | "paragraph"
+  | "header"
+  | "table"
+  | "ui"
+  | "unknown";
+
+/** "code", "terminal", ...; never throws, whichever form arrives. */
+export function blockTypeKey(bt: BlockType): string {
+  return typeof bt === "string" ? bt : "code";
+}
 
 export interface TextBlock {
   id: string;
@@ -152,24 +159,16 @@ export const api = {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
+const BLOCK_LABELS: Record<string, string> = {
+  code: "Code", terminal: "Terminal", log: "Log", paragraph: "Text",
+  header: "Header", table: "Table", ui: "UI",
+};
+
 export function blockTypeLabel(bt: BlockType): string {
-  if ("code" in bt) return "Code";
-  if ("terminal" in bt) return "Terminal";
-  if ("log" in bt) return "Log";
-  if ("paragraph" in bt) return "Text";
-  if ("header" in bt) return "Header";
-  if ("table" in bt) return "Table";
-  if ("ui" in bt) return "UI";
-  return "Unknown";
+  return BLOCK_LABELS[blockTypeKey(bt)] ?? "Unknown";
 }
 
 export function blockTypeBadgeClass(bt: BlockType): string {
-  if ("code" in bt) return "badge-code";
-  if ("terminal" in bt) return "badge-terminal";
-  if ("log" in bt) return "badge-log";
-  if ("paragraph" in bt) return "badge-text";
-  if ("header" in bt) return "badge-header";
-  if ("table" in bt) return "badge-table";
-  if ("ui" in bt) return "badge-ui";
-  return "badge-text";
+  const key = blockTypeKey(bt);
+  return key === "paragraph" || key === "unknown" ? "badge-text" : `badge-${key}`;
 }
