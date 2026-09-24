@@ -45,8 +45,11 @@ fn ensure_permission() -> Result<()> {
 /// A capture where every pixel has the same colour is what a denied permission
 /// produces on some systems; it is never a real screen.
 fn reject_blank(rgba: &[u8]) -> Result<()> {
-    let first = rgba.get(..4).unwrap_or(&[]);
-    if rgba.chunks_exact(4).all(|px| px == first) {
+    let (pixels, _) = rgba.as_chunks::<4>();
+    let Some(first) = pixels.first() else {
+        return Err(CdError::Capture(PERMISSION_MISSING.into()));
+    };
+    if pixels.iter().all(|px| px == first) {
         return Err(CdError::Capture(PERMISSION_MISSING.into()));
     }
     Ok(())
