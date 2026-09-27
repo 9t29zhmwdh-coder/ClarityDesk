@@ -2,6 +2,18 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.1] - 2026-09-27
+
+### Changed
+
+Dependency and CI updates merged since v1.3.0, each with green checks:
+
+- chore(ci): bump the actions group across 1 directory with 5 updates (#73)
+- chore(deps): bump the npm group across 1 directory with 9 updates (#75)
+- chore(deps): bump the cargo group across 1 directory with 6 updates (#76)
+
+---
+
 ## [1.3.0] - 2026-09-24
 
 A review found that ClarityDesk could not do what its README promised. This release makes it work and trims the README to what was tested.
