@@ -2,6 +2,14 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.3] - 2026-09-30
+
+### Fixed
+
+- The release build of 1.3.2 failed on all three platforms. The npm group merged into 1.3.2 raised `@tauri-apps/api` to 2.12.0, while the Rust crate `tauri` stayed on 2.11.6, and the Tauri CLI refuses to build when the two are on different minor versions. The tag v1.3.2 exists, but no binaries were published for it. The Rust side now matches: `tauri` 2.12.0 with `tauri-build` 2.7.0 and `tauri-plugin-global-shortcut` 2.4.0, together with the crates they pull in. 1.3.3 contains everything that 1.3.2 was meant to ship.
+
+---
+
 ## [1.3.2] - 2026-09-30
 
 ### Changed
