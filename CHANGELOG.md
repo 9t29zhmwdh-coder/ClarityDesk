@@ -2,6 +2,17 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.2] - 2026-09-30
+
+### Changed
+
+Dependency and CI updates merged since v1.3.1, each with green checks:
+
+- chore(deps): bump typescript from 5.9.3 to 7.0.2 in /frontend (#59)
+- chore(deps): bump the npm group across 1 directory with 3 updates (#79)
+
+---
+
 ## [1.3.1] - 2026-09-27
 
 ### Changed
