@@ -2,6 +2,14 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.6] - 2026-10-11
+
+### Fixed
+
+- The OpenSSF Scorecard badge in the README (English and German) showed a broken image on GitHub. The Scorecard API answers with a redirect to shields.io, which GitHub's image proxy does not follow reliably. The badge now points at shields.io directly.
+
+---
+
 ## [1.3.5] - 2026-10-11
 
 ### Removed
