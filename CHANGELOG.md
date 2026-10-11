@@ -2,6 +2,14 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.5] - 2026-10-11
+
+### Removed
+
+- The coverage badge, the CI jobs behind it and the `badges` branch. The measured line coverage of `cd-core` and `cd-cli` was 40 percent, and a badge for a number the project does not want to chase only adds noise.
+
+---
+
 ## [1.3.4] - 2026-10-11
 
 ### Added
