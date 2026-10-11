@@ -2,6 +2,18 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.4] - 2026-10-11
+
+### Added
+
+- A coverage badge in the README. The CI job measures line coverage of `cd-core` and `cd-cli` with `cargo tarpaulin` and, on pushes to `main` only, writes the number to a small JSON file on the `badges` branch, which the badge reads. No third-party service and no token beyond the workflow's own are involved.
+
+### Removed
+
+- The upload to Codecov. The repository was never activated there, so the upload went nowhere.
+
+---
+
 ## [1.3.3] - 2026-09-30
 
 ### Changed
