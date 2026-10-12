@@ -2,6 +2,19 @@
 
 All notable changes to ClarityDesk are documented here.
 
+## [1.3.8] - 2026-10-12
+
+### Changed
+
+Dependency and CI updates merged since v1.3.7, each with green checks:
+
+- chore(deps): bump the cargo group across 1 directory with 4 updates (#85)
+- chore(deps): bump the npm group across 1 directory with 5 updates (#86)
+- chore(ci): bump the actions group with 5 updates (#87)
+- chore(deps): bump source-map-js from 1.2.1 to 1.2.2 in /frontend (#89)
+
+---
+
 ## [1.3.7] - 2026-10-11
 
 ### Fixed
